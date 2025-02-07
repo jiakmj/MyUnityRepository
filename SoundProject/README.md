@@ -1,8 +1,58 @@
 # 2025-02-07 필기
+
+</hr>목차
+
++ 오디오 소스
+ + 컴포넌트의 프로퍼티
+ + 3D Sound Settings
++ 오디오 믹서
+ + 믹서 만드는 방법
++ 유니티 레코더
+----------------------
 #### 오디오 소스(Audio Source)
 오디오 소스는 Scene에서 오디오 클립(Audio Clip)을 재생하는 도구입니다.
 재생을 하기 위해서는 오디오 리스너(Audio Listener)나 오디오 믹서(Audio Mixer)를 통해서 재생이 가능합니다.
 믹서의 경우는 따로 만들어야 하며, 오디오 리스너의 경우에는 메인 카메라에 붙어있습니다.
+
+![오디오 소스](https://github.com/user-attachments/assets/6d0a6c13-60d6-40e7-b0ee-b3f276bd6905)
+
+```cs
+//0) 인스펙터에서 직접 연결하는 경우
+public AudioSource audioSourceBGM;    
+
+//1) AudioSourceSample을 객체가 자체적으로 오디오 소스를 가지고 있는 경우
+//private AudioSource own_audioSource;
+
+//3) 씬에서 찾아서 연결하는 경우
+//4) Resources.Load() 기능을 이용해 리소스 폴더에 있는 오디오 소스의 클립을 받아오겠습니다.
+//public AudioSource audioSourceSFX;
+
+    public AudioClip bgm; //오디오 클립에 대한 연결
+
+void Start()
+{
+    //1)의 경우 GetComponent<T>를 통해 해당 객체가 가지고 있는 오디오 소스 연결 가능
+    //own_audioSource = GetComponent<AudioSource>(); //지금은 BGM으로 따로 빼놓아서 X
+
+    //3)의 경우 GameObject.Find().GetComponent<T> 활용
+    //GameObject.Find()는 씬에서 찾은 gameObject를 return하는 기능을 가지고 있음. 즉 이 값은 gameObject임
+    //GameObject이기 때문에 GetComponent<T>를 이어 작성함으로써 오브젝트가 가진 컴포넌트의 값을 return 합니다.
+    //따라서 저 결과물은 AudioSource가 됩니다.
+    //audioSourceSFX = GameObject.Find("SFX").GetComponent<AudioSource>();
+
+...
+
+//오디오 소스 스크립트 기능
+//audioSourceBGM.Play(); //클립을 실행하는 도구
+//audioSourceBGM.Pause(); //일시 정지 기능
+//audioSourceSFX.PlayOneShot(bgm); //클립 하나를 한순간 플레이를 진행합니다.
+//audioSourceBGM.Stop(); //오디오 클립 재생 중지
+//audioSourceBGM.UnPause(); //일시 정지 해제
+//audioSourceBGM.PlayDelayed(1.0f); //1초 뒤에 재생
+
+}
+```
+
 
 #### 컴포넌트의 프로퍼티
 
@@ -55,6 +105,10 @@
   + 2. 선형 그래프(Linear Rolloff): 거리에 따라 일정하게 사운드가 변화하는 구조
   + 3. 커스텀 그래프(Custom Rolloff): 직접 조절하는 영역
 
+![오디오소스3d](https://github.com/user-attachments/assets/1a45cef1-295c-4038-bb67-b500500d0b26)
+
+-----------------------------
+
 #### 오디오 믹서(Audio Mixer)
 오디오 소스에 대한 제어, 균형, 조정을 제공하는 도구입니다.
 
@@ -62,13 +116,20 @@
  + Create -> Audio -> AudioMixer를 통해 Audio Group을 생성합니다.
  + 최초 생성시 Master 그룹이 존재합니다.
 
-+ 유니티 레코더
- + Package Manager -> Unity Registry -> Recorder
- + window -> General -> Recorder -> Recorder Window
- + Exit Play Mode: 체크되어 있으면 녹화 끝나면 플레이도 끝
- + Recording Mode: Manual(사용자 직접 녹화 설정 종료 가능)
- + Playback: 녹화 중 일정 프레임 속도 유지
- + Target FPS: 녹화 FPS 지정
- + Cap: 설정한 FPS를 넘지 않도록 제한
- + movie 설정
+![오디오믹서](https://github.com/user-attachments/assets/298c5cdc-2207-4369-a57e-cfba43647894)
+
+--------------------------------
+
+#### 유니티 레코더
++ Package Manager -> Unity Registry -> Recorder
++ window -> General -> Recorder -> Recorder Window
++ Exit Play Mode: 체크되어 있으면 녹화 끝나면 플레이도 끝
++ Recording Mode: Manual(사용자 직접 녹화 설정 종료 가능)
++ Playback: 녹화 중 일정 프레임 속도 유지
++ Target FPS: 녹화 FPS 지정
++ Cap: 설정한 FPS를 넘지 않도록 제한
++ movie 설정
+
+![유니티레코더](https://github.com/user-attachments/assets/41838b7e-b64f-487e-add7-a3e4b0570c69)
+
 
