@@ -26,3 +26,39 @@ public class Sample : MonoBehaviour
 >>> 그렇지만 사람들은 늘 할게 없다고 외친다. 
 
 ![Image](https://github.com/user-attachments/assets/2ac6af27-fbc4-4a81-b5a7-d5e968a4b298)
+
+
++ 2025-02-07
+  + 유니티 사운드
+    + 유니티 오디오 소스
+
++ 2025-02-07
+  + 유니티 사운드
+    + 유니티 오디오 소스
+   
+- 2025-02-07
+  - 유니티 사운드
+    - 유나티 오디오 소스
+
+
+- 목차
+  - 유니티 스크립트 코드 ------ p.11
+    - 유니티 오디오 소스  
+      
+<hr/>안녕하세요. 반갑습니다. 감사합니다.
+
+------------------------------------------
+
+|제목|내용|설명|
+|:------|---:|:---:|
+|saple1|content1|description1|
+|saple2|content2|description2|
+|saple3|content3|description3|
+||||
+<hr/>왼쪽 정렬 / 오른쪽 정렬 / 중앙 정렬
+
+|프로퍼티 값|내용|
+|---|------|
+|Audio Resources|재생을 진행할 사운드 클립에 대한 등록|
+
+
