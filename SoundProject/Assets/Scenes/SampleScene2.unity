@@ -608,9 +608,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd0af20a6c967c448386f2eaaf416dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minBoard: 50
+  maxBoard: 500
   audioClip: {fileID: 8300000, guid: 978f0d021cff8c3439dc5db4b212b677, type: 3}
   audioSource: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 2e1634bc1fd1bbc4ab0b50c2a7913989, type: 2}
   boards: []
+  samples: 64
 --- !u!114 &527599604
 MonoBehaviour:
   m_ObjectHideFlags: 0

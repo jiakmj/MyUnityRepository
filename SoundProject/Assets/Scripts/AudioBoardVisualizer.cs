@@ -51,6 +51,7 @@ public class AudioBoardVisualizer : MonoBehaviour
     
 
 
+
     // Update is called once per frame
     void Update()
     {
