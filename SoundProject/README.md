@@ -54,3 +54,21 @@
   + 1. 로그 그래프(Logarithmic Rolloff): 가까우면 사운드가 크고, 멀수록 빠르게 사운드가 작아짐
   + 2. 선형 그래프(Linear Rolloff): 거리에 따라 일정하게 사운드가 변화하는 구조
   + 3. 커스텀 그래프(Custom Rolloff): 직접 조절하는 영역
+
+#### 오디오 믹서(Audio Mixer)
+오디오 소스에 대한 제어, 균형, 조정을 제공하는 도구입니다.
+
++ 믹서 만드는 방법
+ + Create -> Audio -> AudioMixer를 통해 Audio Group을 생성합니다.
+ + 최초 생성시 Master 그룹이 존재합니다.
+
++ 유니티 레코더
+ + Package Manager -> Unity Registry -> Recorder
+ + window -> General -> Recorder -> Recorder Window
+ + Exit Play Mode: 체크되어 있으면 녹화 끝나면 플레이도 끝
+ + Recording Mode: Manual(사용자 직접 녹화 설정 종료 가능)
+ + Playback: 녹화 중 일정 프레임 속도 유지
+ + Target FPS: 녹화 FPS 지정
+ + Cap: 설정한 FPS를 넘지 않도록 제한
+ + movie 설정
+
