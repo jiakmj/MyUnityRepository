@@ -30,7 +30,7 @@ public class AssetAddressableManager : MonoBehaviour
             go = obj.Result;
         };
     }
-    public void OnreleaseButtonEnter()
+    public void OnReleaseButtonEnter()
     {
         Addressables.ReleaseInstance(go); //«ÿ¡¶
 
