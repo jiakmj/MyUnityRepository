@@ -108,13 +108,13 @@ public class PlayerController : MonoBehaviour
             //데미지 받는 동안은 조작 불가
             return;
         }
-            rbody.linearVelocity = new Vector2(h, v) * speed;
+        rbody.linearVelocity = new Vector2(h, v) * speed;
     }
 
     //플레이어에게 물리적인 충돌이 발생할 경우
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
             GetDamage(collision.gameObject);
 
