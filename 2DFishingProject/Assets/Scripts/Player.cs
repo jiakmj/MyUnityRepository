@@ -1,31 +1,38 @@
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using System;
-using System.Linq.Expressions;
 
 public class Player : MonoBehaviour
 {
     public float speed = 3.0f; //이동속도
-    float h, v; //가로축 세로축
-    public float z = -90.0f; //회전 각
-    Rigidbody2D rigid;
-    bool isMove = false;
-    public int power = 1;
+    public float jump = 3.0f; //점프
+    float axisH = 0.0f;
+    Rigidbody2D rigid;    
+    bool isJump = false;
+    bool onGround = false;
+    public LayerMask groundLayer;
+
+    public enum ANIME_STATE
+    {
+        PlayerIDLE, PlayerBlink, PlayerRun, PlayerJump
+    }
 
     Animator animator;
     public static string state;
-    public List<string> anime_list = new List<string>
-    {"PlayerDown", "PlayerUp", "PlayerLeft", "PlayerRight"};
-    string current = " ";
-    string previous = " ";
+    //public List<string> anime_list = new List<string>
+    //{"PlayerBlink", "PlayerRun", "PlayerJump"};
+    public string current = " ";
+    public string previous = " ";
+
+    //낚시구현시작
+    int curFish;
+    int pullGauge;
 
     void Start()
     {
         state = "playing";
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        previous = anime_list[0];
+        previous = Enum.GetName(typeof(ANIME_STATE), 0);
     }
 
     void Update()
@@ -35,100 +42,87 @@ public class Player : MonoBehaviour
             return;
         }
 
-        rigid.linearVelocity = new Vector2(h, v) * speed;
+        axisH = Input.GetAxisRaw("Horizontal");               
 
-        if (isMove == false)
+
+        if (axisH > 0.0f)
         {
-            h = Input.GetAxisRaw("Horizontal");
-            v = Input.GetAxisRaw("Vertical");
+            transform.localScale = new Vector2(1, 1);
+        }
+        else if (axisH < 0.0f)
+        {
+            transform.localScale = new Vector2(-1, 1);
         }
 
-        Vector2 from = transform.position;
-
-        Vector2 to = new Vector2(from.x + h, from.y + v);
-
-        z = GetAngle(from, to);
-
-        if (z >= -45 && z < 45)
+        if (Input.GetButtonDown("Jump"))
         {
-            //오른쪽
-            current = anime_list[3];
+            Jump();
+        }               
+
+    }
+    private void FixedUpdate()
+    {
+        if (state != "playing")
+        {
+            return;
         }
-        else if (z >= 45 && z <= 135)
+
+        onGround = Physics2D.Linecast(transform.position, transform.position - (transform.up * 0.1f), groundLayer);
+        //지정한 두 점을 연결하는 가상의 선에 게임 오브젝트가 접촉하는지 조사해 true 또는 false로 return 해주는 함수
+        //up은 Vector 기준(0, 1, 0) 입니다.
+        //(플레이어의 현재 pivot은 bottom)
+
+        //지면 위에 있거나 또는 속도가 0이 아닌 경우
+        if (onGround || axisH != 0)
         {
-            //위쪽
-            current = anime_list[1];
+            rigid.linearVelocity = new Vector2(speed * axisH, rigid.linearVelocityY);
         }
-        else if (z >= -135 && z <= -45)
+
+        //지면 위에 있는 상태에서 점프 키가 눌린 상황
+        if (onGround && isJump)
         {
-            //아래쪽
-            current = anime_list[0];
+            Vector2 jumpPw = new Vector2(0, jump); //플레이어가 가진 점프 수치만큼 벡터 설계
+            rigid.AddForce(jumpPw, ForceMode2D.Impulse); //해당 위치로 힘을 가합니다.
+            isJump = false;
+        }
+
+        if (onGround)
+        {
+            if (axisH == 0)
+            {
+                current = Enum.GetName(typeof(ANIME_STATE), 1);
+
+            }
+
+            else
+            {
+                current = Enum.GetName(typeof(ANIME_STATE), 2);
+            }
         }
         else
         {
-            //왼쪽
-            current = anime_list[2];
+            //공중인 경우
+            current = Enum.GetName(typeof(ANIME_STATE), 3);
         }
-
         if (current != previous)
         {
-            previous = current;
-            animator.Play(current);
-
+            previous = current; //이전 동작에 대한 세이브
+            animator.Play(current); //현재의 모션 플레이
         }
-
-    }
-
-    private float GetAngle(Vector2 from, Vector2 to)
-    {
-        float angle;
-
-        if (h != 0 || v != 0)
-        {
-            float dx = to.x - from.x;
-            float dy = to.y - from.y;
-
-            float radian = Mathf.Atan2(dy, dx);
-
-            angle = radian * Mathf.Rad2Deg;
-
-        }
-        else
-        {
-            angle = z;
-        }
-        return angle;
-    }
-
-    void Attack()
-    {
         
     }
 
-    //void Pull()
-    //{     
+    private void Jump()
+    {
+        isJump = true;
+    }
 
-    //    if (pullGauge) >= fishHealth[curFish])
-    //    {
-    //        Catch(curFish);
-    //    }
-    //    else
-    //    {
-    //        pullGauge += strengthByLevel[strengthLevel];
-    //        //애니메이션추가
-    //    }      
-                        
-    //}
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 7)
+        {
+            isJump = false;
+        }
+    }
 
-    //void Catch(int curFish)
-    //{
-    //    Instantiate(curFish, 9);
-
-    //    pullGauge = 0;
-
-    //    SetFishNum();
-        
-    //}
-   
-    
 }
