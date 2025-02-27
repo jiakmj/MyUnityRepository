@@ -1,30 +1,18 @@
+using System.IO;
+using System;
 using UnityEngine;
 
-public class Fish : MonoBehaviour
+[Serializable]
+public class Fish
 {
-    Rigidbody2D rigid;
-    public int hp;
+    public string name;
+    public int weight; //가중치
+    public int level; //난이도
+    public Sprite sprite; //사진 로드 후 저장
+    public string spritePath; //JSON에서 경로 저장
 
-    /// <summary>
-    /// 물고기 생성 시 일정한 힘과 랜덤으로 물고기가 잡힘
-    /// </summary>
-    private void OnEnable()
+    public void LoadSprite()
     {
-        rigid.AddForce(new Vector2(4.3f, 7.5f), ForceMode2D.Impulse);
-        int torqueX = Random.Range(1, 6);
-        int torqueY = Random.Range(1, 6);
-        rigid.AddForce(new Vector2(torqueX, torqueY), ForceMode2D.Impulse);
-    }
-
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        sprite = Resources.Load<Sprite>(spritePath);
     }
 }
