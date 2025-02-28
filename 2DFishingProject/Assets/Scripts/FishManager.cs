@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using System;
 
@@ -21,7 +22,7 @@ public class FishDatabase
 
 public class FishManager : MonoBehaviour
 {
-    public List<Fish> fishes = new List<Fish>();
+    public List<Fish> fishes = new List<Fish>(); 
 
     void Start()
     {

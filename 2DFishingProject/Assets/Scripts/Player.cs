@@ -17,15 +17,14 @@ public class Player : MonoBehaviour
     }
 
     Animator animator;
-    public static string state;
+    public string state;
     //public List<string> anime_list = new List<string>
     //{"PlayerBlink", "PlayerRun", "PlayerJump"};
     public string current = " ";
     public string previous = " ";
 
-    //낚시구현시작
-    int curFish;
-    int pullGauge;
+    private bool isMove = true;
+    
 
     void Start()
     {
@@ -37,32 +36,35 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (state != "playing")
+        if (state != "playing" || !isMove)
         {
             return;
         }
 
-        axisH = Input.GetAxisRaw("Horizontal");               
+        if (state == "playing")
+        {
+            axisH = Input.GetAxisRaw("Horizontal");
 
 
-        if (axisH > 0.0f)
-        {
-            transform.localScale = new Vector2(1, 1);
-        }
-        else if (axisH < 0.0f)
-        {
-            transform.localScale = new Vector2(-1, 1);
-        }
+            if (axisH > 0.0f)
+            {
+                transform.localScale = new Vector2(1, 1);
+            }
+            else if (axisH < 0.0f)
+            {
+                transform.localScale = new Vector2(-1, 1);
+            }
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            Jump();
-        }               
+            if (Input.GetButtonDown("Jump"))
+            {
+                Jump();
+            }
+        }            
 
     }
     private void FixedUpdate()
     {
-        if (state != "playing")
+        if (state != "playing" || !isMove)
         {
             return;
         }
@@ -123,6 +125,30 @@ public class Player : MonoBehaviour
         {
             isJump = false;
         }
+    }
+
+    public void StartFishing()
+    {
+        state = "fishing";
+        isMove = false;
+    }
+
+    public void EndFishing()
+    {
+        state = "playing";
+        isMove = true;
+    }
+
+    public void EnableMovement()
+    {
+        state = "playing";
+        isMove = true;
+    }
+
+    public void disableMovement()
+    {
+        state = "playing";
+        isMove = false;
     }
 
 }
