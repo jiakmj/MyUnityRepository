@@ -2,7 +2,8 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.AssetImporters;
-using UnityEngine; //NameSpace: 소속
+using UnityEngine;
+using UnityEngine.Animations.Rigging; //NameSpace: 소속
 
 public class PlayerManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class PlayerManager : MonoBehaviour
     private float currentDistance; //현재 카메라와의 거리(3인칭 모드)
     private float targetDistance; //목표 카메라 거리
     private float targetFov; //목표 FOV
-    private bool isZoomed = false; //확대 여부 확인
+    //private bool isZoomed = false; //확대 여부 확인
     private Coroutine zoomCoroutine; //코루틴을 사용하여 확대 축소 처리
     private Camera mainCamera; //카메라 컴포넌트
 
@@ -46,19 +47,42 @@ public class PlayerManager : MonoBehaviour
     public float runSpeed = 10.0f; //뛰는 속도   
     private bool isAim = false;
     private bool isFire = false;
-    private bool isPickUp = false;
+    //private bool isPickUp = false;
 
     public AudioClip audioClipFire;
     private AudioSource audioSource;
     public AudioClip audioClipWeaponChange;
     public AudioClip audioClipPickUp;
+    public AudioClip audioClipFootStep;
     public GameObject SMGObj;
-    private int animationSpeed = 1; //애니메이션 속도 조절
+    //private int animationSpeed = 1; //애니메이션 속도 조절
     private string currentAnimation = "Idle";
 
     public Transform aimTarget;
 
     private float weaponMaxDistance = 100.0f;
+
+    public LayerMask TargetLayerMask;
+
+    public MultiAimConstraint multiAimConstraint;
+
+    public Vector3 boxSize = new Vector3(1.0f, 1.0f, 1.0f);
+    public float castDistance = 5.0f;
+    public LayerMask itemLayer;
+    public Transform itemGetPos;
+
+    //crosshair가 aim상태일 때만 보이게 설정
+    public GameObject crosshairObj;
+    public GameObject SMGIconImage; //나중에 SMG로 이미지 바꿀것
+
+    //아이템을 먹어야만 총을 들 수 있게, 무기가 1개인 경우
+    private bool isUseWeapon = false;
+    private bool isGetSMGItem = false;
+
+    //파티클 이펙트 등록
+    public ParticleSystem SMGEffect;
+
+    private float gunFireDelay = 0.5f;
     
 
     void Start()
@@ -72,6 +96,8 @@ public class PlayerManager : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         SMGObj.SetActive(false);
+        crosshairObj.SetActive(false);
+        SMGIconImage.SetActive(false);        
     }
 
     void Update()
@@ -92,7 +118,7 @@ public class PlayerManager : MonoBehaviour
 
         AnimationSet();
 
-        PickUp();
+        Operate();        
 
         //1번 방법
         //animator.speed = animationSpeed;
@@ -106,12 +132,11 @@ public class PlayerManager : MonoBehaviour
         //    Debug.Log("stateInfo.normalizedTime : " + stateInfo.normalizedTime);
         //}
 
-        if (stateInfo.IsName("HitReaction") && stateInfo.normalizedTime >= 1.0f) //애니메이션의 총 길이를 1로 보고 1.0이 지나면 이 애니메이션이 끝남을 의미함 
+        if (stateInfo.IsName(currentAnimation) && stateInfo.normalizedTime >= 1.0f) //애니메이션의 총 길이를 1로 보고 1.0이 지나면 이 애니메이션이 끝남을 의미함 
         {
             //이 애니메이션이 끝나면 다른 애니메이션을 실행 시켜줘
             currentAnimation = "Attack";
             animator.Play(currentAnimation);
-
         }
     }
 
@@ -122,13 +147,34 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    void PickUp()
+    void Operate()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         if (Input.GetKeyDown(KeyCode.E) && !stateInfo.IsName("PickUp"))
         {
-            animator.SetTrigger("PickUp"); 
+            animator.SetTrigger("Operate");
+        }
+    }
+
+    public void ItemBoxCast()
+    {
+        //줍는 대상 설정
+        Vector3 origin = itemGetPos.position;
+        Vector3 direction = itemGetPos.forward;
+        RaycastHit[] hits;
+        hits = Physics.BoxCastAll(origin, boxSize / 2, direction, Quaternion.identity, castDistance, itemLayer);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.name == "ItemSMG")
+            {
+                hit.collider.gameObject.SetActive(false);
+                audioSource.PlayOneShot(audioClipPickUp);
+                SMGIconImage.SetActive(true);
+                Debug.Log("Item : " + hit.collider.name);
+                isGetSMGItem = true;
+            }
         }
     }
 
@@ -195,11 +241,11 @@ public class PlayerManager : MonoBehaviour
 
     void AimSet()
     {
-        if (Input.GetMouseButtonDown(1)) //우클릭시
+        if (Input.GetMouseButtonDown(1) && isGetSMGItem && isUseWeapon) //우클릭시
         {
-            
-
             isAim = true;
+            multiAimConstraint.data.offset = new Vector3(-40, 0, 0);
+            crosshairObj.SetActive(true);
             //animator.SetBool("isAim", isAim);
             animator.SetLayerWeight(1, 1);
 
@@ -220,9 +266,11 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(1)) //뗐을 때 
+        if (Input.GetMouseButtonUp(1) && isGetSMGItem && isUseWeapon) //뗐을 때 
         {
             isAim = false;
+            multiAimConstraint.data.offset = new Vector3(0, 0, 0);
+            crosshairObj.SetActive(false);
             //animator.SetBool("isAim", isAim);
             animator.SetLayerWeight(1, 0);
 
@@ -247,42 +295,52 @@ public class PlayerManager : MonoBehaviour
     void Fire()
     {
         if (Input.GetMouseButtonDown(0))
-        {
-            //Weapon Type MaxDistance Set 무기에 따라 최대 사정거리 세팅해야 함
-            weaponMaxDistance = 1000.0f;
-
-            if (isAim == true)
+        {       
+            if (isAim && !isFire)
             {
+                //Weapon Type MaxDistance Set 무기에 따라 최대 사정거리 세팅해야 함
+                weaponMaxDistance = 1000.0f;
+
                 isFire = true;
+                gunFireDelay = 3.0f;
+
+                //Weapon Type FireDelay felax fix무기 타입 딜레이 수정
+                StartCoroutine(FireWithDelay(gunFireDelay));
                 animator.SetTrigger("Fire");
 
                 Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
-                RaycastHit hit;
+                RaycastHit[] hits = Physics.RaycastAll(ray, weaponMaxDistance, TargetLayerMask);
 
-                if (Physics.Raycast(ray, out hit, weaponMaxDistance))
+                if (hits.Length > 0)
                 {
-                    Debug.Log("Hit : " + hit.collider.gameObject.name);
-                    Debug.DrawLine(ray.origin, hit.point, Color.red, 2.0f);
+                    foreach (RaycastHit hit in hits)
+                    {
+                        Debug.Log("충돌 : " + hit.collider.name);
+                        Debug.DrawLine(ray.origin, hit.point, Color.red, 3.0f);
+                    }
                 }
                 else
                 {
-                    Debug.DrawLine(ray.origin, ray.origin + ray.direction * weaponMaxDistance, Color.green, 2.0f);
+                    Debug.DrawRay(ray.origin, ray.origin + ray.direction * weaponMaxDistance, Color.green, 3.0f);
                 }
             }
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            isFire = false;            
-        }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    isFire = false;            
+        //}
     }
+
+    
 
     void ChangeTools()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) //1번 누르면 주무기 장착
-        {            
+        if (Input.GetKeyDown(KeyCode.Alpha1) && isGetSMGItem) //1번 누르면 주무기 장착
+        {
             animator.SetTrigger("isWeaponChange");
             SMGObj.SetActive(true);
+            isUseWeapon = true;
         }
     }  
 
@@ -383,6 +441,12 @@ public class PlayerManager : MonoBehaviour
         mainCamera.fieldOfView = targetFov;
     }  
     
+    IEnumerator FireWithDelay(float fireDelay)
+    {
+        yield return new WaitForSeconds(fireDelay);
+        isFire = false;  
+    }
+
     public void WeaponChangeSoundOn()
     {
         audioSource.PlayOneShot(audioClipWeaponChange);
@@ -390,12 +454,18 @@ public class PlayerManager : MonoBehaviour
 
     public void FireSoundOn()
     {
-        audioSource.PlayOneShot(audioClipFire); 
+        audioSource.PlayOneShot(audioClipFire);
+        SMGEffect.Play();
     }
 
     public void PickUpSoundOn()
     {
         audioSource.PlayOneShot(audioClipPickUp);
+    }
+
+    public void FootStepSoundOn()
+    {
+        audioSource.PlayOneShot(audioClipFootStep);//발소리재생       
     }
 
     //public void MovementSoundOn()
@@ -409,7 +479,7 @@ public class PlayerManager : MonoBehaviour
     //}
 
     private void OnTriggerEnter(Collider other)
-    {        
+    {
         if (other.gameObject.CompareTag("PlayerDamage"))
         {
             //animationSpeed = 2; //1번 방법
@@ -419,6 +489,7 @@ public class PlayerManager : MonoBehaviour
             characterController.enabled = false;
             gameObject.transform.position = Vector3.zero;     
             characterController.enabled = true;
+            
         }        
     }
 }
