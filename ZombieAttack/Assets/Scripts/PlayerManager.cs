@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -164,6 +165,7 @@ public class PlayerManager : MonoBehaviour
         Vector3 direction = itemGetPos.forward;
         RaycastHit[] hits;
         hits = Physics.BoxCastAll(origin, boxSize / 2, direction, Quaternion.identity, castDistance, itemLayer);
+        DebugBox(origin, direction);
 
         foreach (RaycastHit hit in hits)
         {
@@ -313,10 +315,11 @@ public class PlayerManager : MonoBehaviour
 
                 if (hits.Length > 0)
                 {
-                    foreach (RaycastHit hit in hits)
+                    for (int i = 0; i < hits.Length && i < 2; i++)
                     {
-                        Debug.Log("충돌 : " + hit.collider.name);
-                        Debug.DrawLine(ray.origin, hit.point, Color.red, 3.0f);
+                        Debug.Log("충돌 : " + hits[i].collider.name);
+                        Debug.DrawLine(ray.origin, hits[i].point, Color.red, 3.0f);
+                        hits[i].collider.GetComponent<ZombieManager>().TakeDamage(30.0f);
                     }
                 }
                 else
@@ -331,8 +334,6 @@ public class PlayerManager : MonoBehaviour
         //    isFire = false;            
         //}
     }
-
-    
 
     void ChangeTools()
     {
@@ -491,5 +492,34 @@ public class PlayerManager : MonoBehaviour
             characterController.enabled = true;
             
         }        
+    }
+
+    void DebugBox(Vector3 origin, Vector3 direction)
+    {
+        Vector3 endPoint = origin + direction * castDistance;
+
+        Vector3[] corners = new Vector3[8];
+        corners[0] = origin + new Vector3(-boxSize.x, -boxSize.y, -boxSize.z) / 2;
+        corners[1] = origin + new Vector3(boxSize.x, -boxSize.y, -boxSize.z) / 2;
+        corners[2] = origin + new Vector3(-boxSize.x, boxSize.y, -boxSize.z) / 2;
+        corners[3] = origin + new Vector3(boxSize.x, boxSize.y, -boxSize.z) / 2;
+        corners[4] = origin + new Vector3(-boxSize.x, -boxSize.y, boxSize.z) / 2;
+        corners[5] = origin + new Vector3(boxSize.x, -boxSize.y, boxSize.z) / 2;
+        corners[6] = origin + new Vector3(-boxSize.x, boxSize.y, boxSize.z) / 2;
+        corners[7] = origin + new Vector3(boxSize.x, boxSize.y, boxSize.z) / 2;
+
+        Debug.DrawLine(corners[0], corners[1], Color.green, 3.0f);
+        Debug.DrawLine(corners[1], corners[3], Color.green, 3.0f);
+        Debug.DrawLine(corners[2], corners[2], Color.green, 3.0f);
+        Debug.DrawLine(corners[3], corners[0], Color.green, 3.0f);
+        Debug.DrawLine(corners[4], corners[5], Color.green, 3.0f);
+        Debug.DrawLine(corners[5], corners[7], Color.green, 3.0f);
+        Debug.DrawLine(corners[6], corners[6], Color.green, 3.0f);
+        Debug.DrawLine(corners[7], corners[4], Color.green, 3.0f);
+        Debug.DrawLine(corners[0], corners[4], Color.green, 3.0f);
+        Debug.DrawLine(corners[1], corners[5], Color.green, 3.0f);
+        Debug.DrawLine(corners[2], corners[6], Color.green, 3.0f);
+        Debug.DrawLine(corners[3], corners[7], Color.green, 3.0f);
+        Debug.DrawLine(origin, direction * castDistance, Color.green);
     }
 }
