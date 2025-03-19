@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
 using UnityEngine.Animations.Rigging; //NameSpace: 소속
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class PlayerManager : MonoBehaviour
     private float currentDistance; //현재 카메라와의 거리(3인칭 모드)
     private float targetDistance; //목표 카메라 거리
     private float targetFov; //목표 FOV
-    //private bool isZoomed = false; //확대 여부 확인
+    private bool isZoomed = false; //확대 여부 확인
     private Coroutine zoomCoroutine; //코루틴을 사용하여 확대 축소 처리
     private Camera mainCamera; //카메라 컴포넌트
 
@@ -48,7 +49,7 @@ public class PlayerManager : MonoBehaviour
     public float runSpeed = 10.0f; //뛰는 속도   
     private bool isAim = false;
     private bool isFire = false;
-    //private bool isPickUp = false;
+    private bool isPickUp = false;
 
     public AudioClip audioClipFire;
     private AudioSource audioSource;
@@ -56,7 +57,7 @@ public class PlayerManager : MonoBehaviour
     public AudioClip audioClipPickUp;
     public AudioClip audioClipFootStep;
     public GameObject SMGObj;
-    //private int animationSpeed = 1; //애니메이션 속도 조절
+    private int animationSpeed = 1; //애니메이션 속도 조절
     private string currentAnimation = "Idle";
 
     public Transform aimTarget;
@@ -84,10 +85,27 @@ public class PlayerManager : MonoBehaviour
     public ParticleSystem SMGEffect;
 
     private float gunFireDelay = 0.5f;
-    
+
+    public ParticleSystem DamageParticleSystem;
+    public AudioClip audioClipDamage;
+
+    public Text bulletText;
+    private int firebulletCount = 0; //장전한 총알
+    private int savebulletCount = 0; //가지고 있는 총알
+
+    public GameObject flashLightObj;
+    private bool isFlashLightOn = false;
+    public AudioClip audioClipFlashOn;
+
+    private int playerHp = 100;
+
+    private bool isReloading = false;
+    public AudioClip audioClipReload;
+    public AudioClip audioClipBlankAmmo;
+    public AudioClip audioClipHit;
 
     void Start()
-    {             
+    {
         Cursor.lockState = CursorLockMode.Locked;
         currentDistance = thirdPersonDistance;
         targetDistance = thirdPersonDistance;
@@ -98,7 +116,10 @@ public class PlayerManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         SMGObj.SetActive(false);
         crosshairObj.SetActive(false);
-        SMGIconImage.SetActive(false);        
+        SMGIconImage.SetActive(false);
+        bulletText.text = $"{firebulletCount}/{savebulletCount}";
+        bulletText.gameObject.SetActive(false);
+        flashLightObj.SetActive(false);
     }
 
     void Update()
@@ -119,10 +140,14 @@ public class PlayerManager : MonoBehaviour
 
         AnimationSet();
 
-        Operate();        
+        Operate();
+
+        Reloading();
+
+        ActionFlashLight();        
 
         //1번 방법
-        //animator.speed = animationSpeed;
+        animator.speed = animationSpeed;
 
         //2번 방법
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -176,6 +201,20 @@ public class PlayerManager : MonoBehaviour
                 SMGIconImage.SetActive(true);
                 Debug.Log("Item : " + hit.collider.name);
                 isGetSMGItem = true;
+                bulletText.gameObject.SetActive(true);
+            }
+            else if (hit.collider.name == "ItemBullet")
+            {                               
+                hit.collider.gameObject.SetActive(false);
+                audioSource.PlayOneShot(audioClipPickUp);
+                savebulletCount += 30;
+                if (savebulletCount >= 120)
+                {
+                    savebulletCount = 120;
+                }
+                //isBulletItem = true;
+                bulletText.text = $"{firebulletCount}/{savebulletCount}";
+                bulletText.gameObject.SetActive(true);
             }
         }
     }
@@ -297,34 +336,58 @@ public class PlayerManager : MonoBehaviour
     void Fire()
     {
         if (Input.GetMouseButtonDown(0))
-        {       
+        {
+            if (isReloading)
+            {
+                return;
+            }
+
             if (isAim && !isFire)
             {
-                //Weapon Type MaxDistance Set 무기에 따라 최대 사정거리 세팅해야 함
-                weaponMaxDistance = 1000.0f;
-
-                isFire = true;
-                gunFireDelay = 3.0f;
-
-                //Weapon Type FireDelay felax fix무기 타입 딜레이 수정
-                StartCoroutine(FireWithDelay(gunFireDelay));
-                animator.SetTrigger("Fire");
-
-                Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
-                RaycastHit[] hits = Physics.RaycastAll(ray, weaponMaxDistance, TargetLayerMask);
-
-                if (hits.Length > 0)
+                if (firebulletCount > 0)
                 {
-                    for (int i = 0; i < hits.Length && i < 2; i++)
+                    firebulletCount -= 1;
+                    bulletText.text = $"{firebulletCount}/{savebulletCount}";
+                    bulletText.gameObject.SetActive(true);
+
+                    //Weapon Type MaxDistance Set 무기에 따라 최대 사정거리 세팅해야 함
+                    weaponMaxDistance = 1000.0f;
+
+                    isFire = true;
+                    //gunFireDelay = 1.0f;
+
+                    //Weapon Type FireDelay felax fix무기 타입 딜레이 수정
+                    StartCoroutine(FireWithDelay(gunFireDelay));
+                    animator.SetTrigger("Fire");
+
+                    Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+                    RaycastHit[] hits = Physics.RaycastAll(ray, weaponMaxDistance, TargetLayerMask);
+
+                    if (hits.Length > 0)
                     {
-                        Debug.Log("충돌 : " + hits[i].collider.name);
-                        Debug.DrawLine(ray.origin, hits[i].point, Color.red, 3.0f);
-                        hits[i].collider.GetComponent<ZombieManager>().TakeDamage(30.0f);
+                        for (int i = 0; i < hits.Length && i < 2; i++)
+                        {
+                            Debug.Log("충돌 : " + hits[i].collider.name);
+
+                            ParticleSystem particle = Instantiate(DamageParticleSystem, hits[i].point, Quaternion.identity); //프리팹 복제해서 재생
+                                                                                                                             //DamageParticleSystem.transform.position = hits[i].point; //맞은 위치에서 파티클 나오게
+                            particle.Play();
+                            audioSource.PlayOneShot(audioClipDamage);
+
+                            Debug.DrawLine(ray.origin, hits[i].point, Color.red, 3.0f);
+                            hits[i].collider.GetComponent<ZombieManager>().TakeDamage(30.0f);
+                        }
+                    }
+                    else
+                    {
+                        Debug.DrawRay(ray.origin, ray.origin + ray.direction * weaponMaxDistance, Color.green, 3.0f);
                     }
                 }
                 else
                 {
-                    Debug.DrawRay(ray.origin, ray.origin + ray.direction * weaponMaxDistance, Color.green, 3.0f);
+                    //총알이 없는 소리 재생
+                    audioSource.PlayOneShot(audioClipBlankAmmo);
+                    Debug.Log("총알없음");                    
                 }
             }
         }
@@ -333,6 +396,36 @@ public class PlayerManager : MonoBehaviour
         //{
         //    isFire = false;            
         //}
+    }
+    void Reloading()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading) //R키 누르면 장전
+        {
+            if (savebulletCount > 0 && firebulletCount < 30)
+            {
+                isReloading = true;                               
+
+                int neededBullets = 30 - firebulletCount;
+
+                if (savebulletCount >= neededBullets)
+                {
+                    firebulletCount += neededBullets;
+                    savebulletCount -= neededBullets;
+                }
+                else
+                {
+                    firebulletCount += savebulletCount;
+                    savebulletCount = 0;
+                }
+
+                bulletText.text = $"{firebulletCount}/{savebulletCount}";
+                bulletText.gameObject.SetActive(true);
+                Debug.Log($"{firebulletCount}/{savebulletCount}");
+
+                isReloading = false;
+            }
+            animator.SetTrigger("isWeaponReload");
+        }
     }
 
     void ChangeTools()
@@ -343,7 +436,18 @@ public class PlayerManager : MonoBehaviour
             SMGObj.SetActive(true);
             isUseWeapon = true;
         }
-    }  
+    }
+
+    void ActionFlashLight()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            audioSource.PlayOneShot(audioClipFlashOn);
+            isFlashLightOn = !isFlashLightOn;
+            flashLightObj.SetActive(isFlashLightOn);
+        }
+    }
+
 
     void AnimationSet()
     {
@@ -466,7 +570,17 @@ public class PlayerManager : MonoBehaviour
 
     public void FootStepSoundOn()
     {
-        audioSource.PlayOneShot(audioClipFootStep);//발소리재생       
+        audioSource.PlayOneShot(audioClipFootStep); //발소리재생       
+    }
+
+    public void ReloadingSoundOn()
+    {
+        audioSource.PlayOneShot(audioClipReload); //장전소리 재생    
+    }
+
+    public void HitSoundOn()
+    {
+        audioSource.PlayOneShot(audioClipHit); //맞는소리 재생    
     }
 
     //public void MovementSoundOn()
@@ -483,15 +597,19 @@ public class PlayerManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("PlayerDamage"))
         {
-            //animationSpeed = 2; //1번 방법
-            FireSoundOn();
+            //animationSpeed = 2; //1번 방법            
             animator.SetLayerWeight(1, 0);
             animator.SetTrigger("Damage");
             characterController.enabled = false;
             gameObject.transform.position = Vector3.zero;     
             characterController.enabled = true;
-            
-        }        
+            playerHp -= 30;
+        }               
+        else if (other.gameObject.name == "Attack")
+        {            
+            animator.SetTrigger("Damage");            
+            playerHp -= 30;
+        }
     }
 
     void DebugBox(Vector3 origin, Vector3 direction)
