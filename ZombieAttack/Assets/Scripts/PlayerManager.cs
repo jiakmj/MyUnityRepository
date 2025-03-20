@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager Instance { get; private set; }
+
     private float moveSpeed = 5.0f; //플레이어 이동 속도
     public float mouseSensitivity = 100.0f; //마우스 감도
     public Transform cameraTransform; //카메라의 Transform
@@ -104,6 +106,24 @@ public class PlayerManager : MonoBehaviour
     public AudioClip audioClipBlankAmmo;
     public AudioClip audioClipHit;
 
+    public GameObject PauseObj;
+    private bool isPause = false;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            if (Instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -120,6 +140,7 @@ public class PlayerManager : MonoBehaviour
         bulletText.text = $"{firebulletCount}/{savebulletCount}";
         bulletText.gameObject.SetActive(false);
         flashLightObj.SetActive(false);
+        PauseObj.SetActive(false);
     }
 
     void Update()
@@ -144,7 +165,9 @@ public class PlayerManager : MonoBehaviour
 
         Reloading();
 
-        ActionFlashLight();        
+        ActionFlashLight();
+
+        GameMenu();        
 
         //1번 방법
         animator.speed = animationSpeed;
@@ -333,6 +356,37 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    void Reloading()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading) //R키 누르면 장전
+        {
+            if (savebulletCount > 0 && firebulletCount < 30)
+            {
+                isReloading = true;                               
+
+                int neededBullets = 30 - firebulletCount;
+
+                if (savebulletCount >= neededBullets)
+                {
+                    firebulletCount += neededBullets;
+                    savebulletCount -= neededBullets;
+                }
+                else
+                {
+                    firebulletCount += savebulletCount;
+                    savebulletCount = 0;
+                }
+
+                bulletText.text = $"{firebulletCount}/{savebulletCount}";
+                bulletText.gameObject.SetActive(true);
+                Debug.Log($"{firebulletCount}/{savebulletCount}");
+
+                isReloading = false;
+            }
+            animator.SetTrigger("isWeaponReload");
+        }
+    }
+
     void Fire()
     {
         if (Input.GetMouseButtonDown(0))
@@ -386,7 +440,8 @@ public class PlayerManager : MonoBehaviour
                 else
                 {
                     //총알이 없는 소리 재생
-                    audioSource.PlayOneShot(audioClipBlankAmmo);
+                    SoundManager.Instance.PlaySFX("GunEmptySound", transform.position);
+                    //audioSource.PlayOneShot(audioClipBlankAmmo);
                     Debug.Log("총알없음");                    
                 }
             }
@@ -396,36 +451,6 @@ public class PlayerManager : MonoBehaviour
         //{
         //    isFire = false;            
         //}
-    }
-    void Reloading()
-    {
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading) //R키 누르면 장전
-        {
-            if (savebulletCount > 0 && firebulletCount < 30)
-            {
-                isReloading = true;                               
-
-                int neededBullets = 30 - firebulletCount;
-
-                if (savebulletCount >= neededBullets)
-                {
-                    firebulletCount += neededBullets;
-                    savebulletCount -= neededBullets;
-                }
-                else
-                {
-                    firebulletCount += savebulletCount;
-                    savebulletCount = 0;
-                }
-
-                bulletText.text = $"{firebulletCount}/{savebulletCount}";
-                bulletText.gameObject.SetActive(true);
-                Debug.Log($"{firebulletCount}/{savebulletCount}");
-
-                isReloading = false;
-            }
-            animator.SetTrigger("isWeaponReload");
-        }
     }
 
     void ChangeTools()
@@ -446,6 +471,43 @@ public class PlayerManager : MonoBehaviour
             isFlashLightOn = !isFlashLightOn;
             flashLightObj.SetActive(isFlashLightOn);
         }
+    }
+
+    private void GameMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPause = !isPause;
+
+            if (isPause)
+            {
+                Pause();
+            }
+            else
+            {
+                ReGame();
+            }
+        }
+    }
+
+    public void ReGame()
+    {
+        PauseObj.SetActive(false);
+        Time.timeScale = 1; //게임 시간 재개
+    }
+
+    public void Pause()
+    {
+        PauseObj.SetActive(true);
+        Time.timeScale = 0; //게임 시간 정지
+        
+    }
+
+    public void Exit()
+    {
+        PauseObj.SetActive(false);
+        Time.timeScale = 0;
+        Application.Quit();
     }
 
 
@@ -554,33 +616,39 @@ public class PlayerManager : MonoBehaviour
 
     public void WeaponChangeSoundOn()
     {
-        audioSource.PlayOneShot(audioClipWeaponChange);
+        SoundManager.Instance.PlaySFX("GunEmptySound", transform.position);
+        //audioSource.PlayOneShot(audioClipWeaponChange);
     }
 
     public void FireSoundOn()
     {
-        audioSource.PlayOneShot(audioClipFire);
+        SoundManager.Instance.PlaySFX("GunFireSound", transform.position);
+        //audioSource.PlayOneShot(audioClipFire);
         SMGEffect.Play();
     }
 
     public void PickUpSoundOn()
     {
-        audioSource.PlayOneShot(audioClipPickUp);
+        SoundManager.Instance.PlaySFX("PickUpSound", transform.position);
+        //audioSource.PlayOneShot(audioClipPickUp);
     }
 
     public void FootStepSoundOn()
     {
-        audioSource.PlayOneShot(audioClipFootStep); //발소리재생       
+        SoundManager.Instance.PlaySFX("LeftFootStepSound", transform.position);
+        //audioSource.PlayOneShot(audioClipFootStep); //발소리재생       
     }
 
     public void ReloadingSoundOn()
     {
-        audioSource.PlayOneShot(audioClipReload); //장전소리 재생    
+        SoundManager.Instance.PlaySFX("GunReloadSound", transform.position);
+        //audioSource.PlayOneShot(audioClipReload); //장전소리 재생    
     }
 
     public void HitSoundOn()
     {
-        audioSource.PlayOneShot(audioClipHit); //맞는소리 재생    
+        SoundManager.Instance.PlaySFX("PlayerPainSound", transform.position);
+        //audioSource.PlayOneShot(audioClipHit); //맞는소리 재생    
     }
 
     //public void MovementSoundOn()
@@ -610,7 +678,13 @@ public class PlayerManager : MonoBehaviour
             animator.SetTrigger("Damage");            
             playerHp -= 30;
         }
-    }
+        //else if (other.CompareTag("Item"))
+        //{
+        //    other.gameObject.transform.SetParent(transform);
+        //    other.gameObject.transform.SetParent(itemGetPos);
+        //    other.gameObject.transform.SetParent(null);
+        //} //아이템을 먹으면 플레이어의 자식으로 추가하고 다 쓰면 자식에서 나옴
+    }    
 
     void DebugBox(Vector3 origin, Vector3 direction)
     {
