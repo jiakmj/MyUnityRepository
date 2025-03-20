@@ -15,6 +15,7 @@ public class ZombieManager : MonoBehaviour
     public Transform[] patrolPoints; //순찰 경로 지점들
     private int currentPoint = 0; //현재 순찰 경로 지점 인덱스
     public float moveSpeed = 2.0f; //이동속도
+    public float runSpeed = 4.0f; 
     private bool isWalk = false;
     private float trackingRange = 3.0f; //추적 범위 설정
     private bool isAttack = false; //공격 상태
@@ -156,6 +157,10 @@ public class ZombieManager : MonoBehaviour
                 {
                     ChangeState(EZombieState.Attack);
                 }
+                else if (zombieHp <= 30)
+                {
+                    ChangeState(EZombieState.Evade);
+                }
             }
             yield return null;
         }
@@ -193,10 +198,13 @@ public class ZombieManager : MonoBehaviour
             {
                 ChangeState(EZombieState.Attack);
             }
-            //else if (distance < evadeRange)
-            //{
-            //    ChangeState(EZombieState.Idle);
-            //}
+            else if (zombieHp <= 30)
+            {
+                agent.speed = runSpeed;
+                animator.SetBool("isWalk", false);
+                animator.SetBool("isRun", true);
+                ChangeState(EZombieState.Evade);
+            }
             yield return null;
         }
     }
@@ -216,12 +224,18 @@ public class ZombieManager : MonoBehaviour
         {
             Debug.Log("공격>추적 변함");
             ChangeState(EZombieState.Chase);
-        }
+        }        
         else
         {
             ChangeState(EZombieState.Attack);
         }
+
+        if (zombieHp <= 30)
+        {
+            ChangeState(EZombieState.Evade);
+        }
     }
+    
 
     private IEnumerator Evade()
     {
