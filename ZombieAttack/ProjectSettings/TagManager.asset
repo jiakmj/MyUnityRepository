@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - PlayerDamage
+  - FxTemporaire
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - Player
   - Zombie
   - Item
-  - 
+  - Door
   - 
   - 
   - 

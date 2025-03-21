@@ -3,10 +3,18 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.AssetImporters;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Animations.Rigging; //NameSpace: 소속
 using UnityEngine.UI;
 
+//무기를 여러개 쓰면
+public enum WeaponMode
+{
+    Pistol,
+    Shotgun,
+    Rifle,
+}
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
@@ -109,6 +117,18 @@ public class PlayerManager : MonoBehaviour
     public GameObject PauseObj;
     private bool isPause = false;
 
+    private WeaponMode currentWeaponMode = WeaponMode.Rifle;
+    private int ShotgunRayCount = 5;
+    private float shotGunSpreadAngle = 10.0f;
+    private float recoilStrength = 2.0f; //반동
+    private float maxRecoilAngle = 10.0f; //반동의 최대 각도
+    private float currentRecoil = 0.0f; 
+    private float shakeDuration = 0.1f; //흔들림
+    private float shakeMagnitude = 0.1f; //흔들림 강도
+    private Vector3 originalCameraPosition; //카메라가 흔들렸으니 기본 카메라 위치
+    private Coroutine cameraShakeCoroutine;   
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -141,6 +161,8 @@ public class PlayerManager : MonoBehaviour
         bulletText.gameObject.SetActive(false);
         flashLightObj.SetActive(false);
         PauseObj.SetActive(false);
+
+        
     }
 
     void Update()
@@ -167,7 +189,8 @@ public class PlayerManager : MonoBehaviour
 
         ActionFlashLight();
 
-        GameMenu();        
+        GameMenu();
+
 
         //1번 방법
         animator.speed = animationSpeed;
@@ -187,7 +210,79 @@ public class PlayerManager : MonoBehaviour
             currentAnimation = "Attack";
             animator.Play(currentAnimation);
         }
+
+        if (currentRecoil > 0 )
+        {
+            //총을 쐈을 때 반동으로 인해 위로 올라가는 코드
+            currentRecoil -= recoilStrength * Time.deltaTime; //반동을 서서히 줄임
+            currentRecoil = Mathf.Clamp(currentRecoil, 0, maxRecoilAngle);
+            Quaternion currentRotation = Camera.main.transform.rotation;
+            Quaternion recoilRotation = Quaternion.Euler(-currentRecoil, 0, 0);
+            Camera.main.transform.rotation = currentRotation * recoilRotation; //카메라를 제어하는 코드를 꺼야한다.
+
+        }
     }
+
+    void FireShotgun()
+    {
+        for (int i = 0; i < ShotgunRayCount; i++)
+        {
+            RaycastHit hit;
+
+            Vector3 origin = Camera.main.transform.position;
+            Vector3 spreadDirection = GetSpreadDirection(Camera.main.transform.forward, shotGunSpreadAngle);
+            Debug.DrawRay(origin, spreadDirection * castDistance, Color.blue, 2.0f);
+            if (Physics.Raycast(origin, spreadDirection, out hit, castDistance, TargetLayerMask))
+            {
+                Debug.Log("Shotgun Hit : " + hit.collider.name);
+            }
+        }
+    }
+    Vector3 GetSpreadDirection(Vector3 forwardDirection, float spreadAngle)
+    {
+        float spreadX = Random.Range(-spreadAngle, spreadAngle);
+        float spreadY = Random.Range(-spreadAngle, spreadAngle);
+        Vector3 spreadDirection = Quaternion.Euler(spreadX, spreadY, 0) * forwardDirection;
+        return spreadDirection;
+    }
+
+    void ApplyRecoil()
+    {
+        Quaternion currentRotation = Camera.main.transform.rotation; //현재 카메라 월드 회전값 가져오기
+        Quaternion recoilRotation = Quaternion.Euler(-currentRecoil, 0, 0); //반동을 계산해서 x축 상하 회전에 추가
+        Camera.main.transform.rotation = currentRotation * recoilRotation; //현재 회전 값에 반동을 곱하여 새로운 회전값
+        currentRecoil += recoilStrength;
+        currentRecoil = Mathf.Clamp(currentRecoil, 0, maxRecoilAngle); //반동값을 제한
+    }
+
+
+    void StartCameraShake()
+    {
+        if (cameraShakeCoroutine != null)
+        {
+            StopCoroutine(cameraShakeCoroutine);
+        }
+        cameraShakeCoroutine = StartCoroutine(CameraShake(shakeDuration, shakeMagnitude));
+    }
+
+    IEnumerator CameraShake(float duration, float magnitude)
+    {
+        float elapsed = 0.0f;
+        Vector3 originalPosition = Camera.main.transform.position;
+        while (elapsed < duration)
+        {
+            float offsetX = Random.Range(-1.0f, 1.0f) * magnitude;
+            float offsetY = Random.Range(-1.0f, 1.0f) * magnitude;
+
+            Camera.main.transform.position = originalPosition + new Vector3(offsetX, offsetY, 0.0f);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+        Camera.main.transform.position = originalPosition; //원래 위치로 돌아감
+    }
+
 
     void UpdateAimTarget()
     {
@@ -238,6 +333,20 @@ public class PlayerManager : MonoBehaviour
                 //isBulletItem = true;
                 bulletText.text = $"{firebulletCount}/{savebulletCount}";
                 bulletText.gameObject.SetActive(true);
+            }
+            else if (hit.collider.name == "Door")
+            {
+                Debug.Log("도어");
+                if (hit.collider.GetComponent<DoorManager>().isOpen)
+                {
+                    Debug.Log("앞으로열기");
+                    hit.collider.GetComponent<Animator>().SetTrigger("OpenForward");
+                }
+                else
+                {
+                    Debug.Log("뒤로열기");
+                    hit.collider.GetComponent<Animator>().SetTrigger("OpenBackward");                
+                }
             }
         }
     }
@@ -398,6 +507,39 @@ public class PlayerManager : MonoBehaviour
 
             if (isAim && !isFire)
             {
+                //무기를 바꾼다면
+                if (currentWeaponMode == WeaponMode.Pistol)
+                {
+
+                }
+                else if (currentWeaponMode == WeaponMode.Shotgun)
+                {
+                    if (firebulletCount > 0)
+                    {
+                        firebulletCount -= 1;
+                        bulletText.text = $"{firebulletCount}/{savebulletCount}";
+                        bulletText.gameObject.SetActive(true);
+
+                        //Weapon Type MaxDistance Set 무기에 따라 최대 사정거리 세팅해야 함
+                        weaponMaxDistance = 1000.0f;
+
+                        isFire = true;
+                        //gunFireDelay = 1.0f;
+
+                        //Weapon Type FireDelay felax fix무기 타입 딜레이 수정
+                        StartCoroutine(FireWithDelay(gunFireDelay));
+                        animator.SetTrigger("Fire");
+
+                        Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+                        RaycastHit[] hits = Physics.RaycastAll(ray, weaponMaxDistance, TargetLayerMask);
+                    }
+                    FireShotgun();
+                }
+                else if (currentWeaponMode == WeaponMode.Rifle)
+                {
+
+                }
+
                 if (firebulletCount > 0)
                 {
                     firebulletCount -= 1;
@@ -414,6 +556,10 @@ public class PlayerManager : MonoBehaviour
                     StartCoroutine(FireWithDelay(gunFireDelay));
                     animator.SetTrigger("Fire");
 
+                    //반동추가
+                    ApplyRecoil();
+                    StartCameraShake();
+
                     Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
                     RaycastHit[] hits = Physics.RaycastAll(ray, weaponMaxDistance, TargetLayerMask);
 
@@ -423,10 +569,12 @@ public class PlayerManager : MonoBehaviour
                         {
                             Debug.Log("충돌 : " + hits[i].collider.name);
 
+                            //ParticleManager.Instance.ParticlePlay(ParticleType.DamageExplosion, hits[i].point, Vector3.one);
                             ParticleSystem particle = Instantiate(DamageParticleSystem, hits[i].point, Quaternion.identity); //프리팹 복제해서 재생
-                                                                                                                             //DamageParticleSystem.transform.position = hits[i].point; //맞은 위치에서 파티클 나오게
+                            DamageParticleSystem.transform.position = hits[i].point; //맞은 위치에서 파티클 나오게
                             particle.Play();
-                            audioSource.PlayOneShot(audioClipDamage);
+                            SoundManager.Instance.PlaySFX("zombieGrowl", transform.position);
+                            //audioSource.PlayOneShot(audioClipDamage);
 
                             Debug.DrawLine(ray.origin, hits[i].point, Color.red, 3.0f);
                             hits[i].collider.GetComponent<ZombieManager>().TakeDamage(30.0f);
@@ -683,8 +831,8 @@ public class PlayerManager : MonoBehaviour
         //    other.gameObject.transform.SetParent(transform);
         //    other.gameObject.transform.SetParent(itemGetPos);
         //    other.gameObject.transform.SetParent(null);
-        //} //아이템을 먹으면 플레이어의 자식으로 추가하고 다 쓰면 자식에서 나옴
-    }    
+        //} //아이템을 먹으면 플레이어의 자식으로 추가하고 다 쓰면 자식에서 나옴        
+    }
 
     void DebugBox(Vector3 origin, Vector3 direction)
     {
@@ -702,16 +850,16 @@ public class PlayerManager : MonoBehaviour
 
         Debug.DrawLine(corners[0], corners[1], Color.green, 3.0f);
         Debug.DrawLine(corners[1], corners[3], Color.green, 3.0f);
-        Debug.DrawLine(corners[2], corners[2], Color.green, 3.0f);
-        Debug.DrawLine(corners[3], corners[0], Color.green, 3.0f);
+        Debug.DrawLine(corners[3], corners[2], Color.green, 3.0f);
+        Debug.DrawLine(corners[2], corners[0], Color.green, 3.0f);
         Debug.DrawLine(corners[4], corners[5], Color.green, 3.0f);
         Debug.DrawLine(corners[5], corners[7], Color.green, 3.0f);
-        Debug.DrawLine(corners[6], corners[6], Color.green, 3.0f);
-        Debug.DrawLine(corners[7], corners[4], Color.green, 3.0f);
+        Debug.DrawLine(corners[7], corners[6], Color.green, 3.0f);
+        Debug.DrawLine(corners[6], corners[4], Color.green, 3.0f);
         Debug.DrawLine(corners[0], corners[4], Color.green, 3.0f);
         Debug.DrawLine(corners[1], corners[5], Color.green, 3.0f);
         Debug.DrawLine(corners[2], corners[6], Color.green, 3.0f);
         Debug.DrawLine(corners[3], corners[7], Color.green, 3.0f);
-        Debug.DrawLine(origin, direction * castDistance, Color.green);
+        Debug.DrawRay(origin, direction * castDistance, Color.green);
     }
 }
