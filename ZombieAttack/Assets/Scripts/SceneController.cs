@@ -33,4 +33,10 @@ public class SceneController : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void GameOver()
+    {
+        Debug.Log("게임 오버");
+        SceneManager.LoadScene("Game Over");
+    }
 }

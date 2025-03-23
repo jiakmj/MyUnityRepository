@@ -107,7 +107,8 @@ public class PlayerManager : MonoBehaviour
     private bool isFlashLightOn = false;
     public AudioClip audioClipFlashOn;
 
-    private int playerHp = 100;
+    private float playerHp = 100;
+    private bool isDead = false;
 
     private bool isReloading = false;
     public AudioClip audioClipReload;
@@ -599,6 +600,27 @@ public class PlayerManager : MonoBehaviour
         //{
         //    isFire = false;            
         //}
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (isDead) return;
+
+        playerHp -= damage;
+
+        if (playerHp <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        isDead = true;
+        animator.SetTrigger("isDead");
+
+        //GameManager.Instance.GameOver();
+        gameObject.SetActive(false);
     }
 
     void ChangeTools()
