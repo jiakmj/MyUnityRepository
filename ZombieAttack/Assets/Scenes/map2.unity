@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0.10072447, g: 0.13515687, b: 0.16911763, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.2282841, g: 0.25404164, b: 0.2830189, a: 1}
   m_FogMode: 2
-  m_FogDensity: 0.022
+  m_FogDensity: 0.3
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 0.75}
@@ -48590,6 +48590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  LastOpenedForward: 0
 --- !u!137 &3399815448959969954
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

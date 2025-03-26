@@ -6,6 +6,7 @@ using UnityEditor.AssetImporters;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Animations.Rigging; //NameSpace: 소속
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //무기를 여러개 쓰면
@@ -127,7 +128,9 @@ public class PlayerManager : MonoBehaviour
     private float shakeDuration = 0.1f; //흔들림
     private float shakeMagnitude = 0.1f; //흔들림 강도
     private Vector3 originalCameraPosition; //카메라가 흔들렸으니 기본 카메라 위치
-    private Coroutine cameraShakeCoroutine;   
+    private Coroutine cameraShakeCoroutine;
+
+    private bool lastOpenedForward = true;
 
 
     private void Awake()
@@ -163,7 +166,18 @@ public class PlayerManager : MonoBehaviour
         flashLightObj.SetActive(false);
         PauseObj.SetActive(false);
 
-        
+        RenderSettings.fog = true; //안개 효과 활성화
+        RenderSettings.fogColor = Color.blue; //안개의 색 설정
+        RenderSettings.fogDensity = 0.1f; //안개의 밀도 설정
+        RenderSettings.fogStartDistance = 10f; //안개 시작 거리와 종료거리 설정(Linear 모드에서 사용)
+        RenderSettings.fogEndDistance = 100f;
+        RenderSettings.fogMode = FogMode.Exponential; //지주 함수 기반 안개
+
+        if (mainCamera != null) //카메라의 Clear Flags를 Solid Color로 설정하고, 배경색을 안개색으로 설정
+        {
+            mainCamera.clearFlags = CameraClearFlags.SolidColor;
+            mainCamera.backgroundColor = RenderSettings.fogColor;
+        }
     }
 
     void Update()
@@ -337,16 +351,29 @@ public class PlayerManager : MonoBehaviour
             }
             else if (hit.collider.name == "Door")
             {
-                Debug.Log("도어");
-                if (hit.collider.GetComponent<DoorManager>().isOpen)
+                DoorManager doorManager = hit.collider.GetComponent<DoorManager>();
+
+                if (doorManager != null) //오류방지
                 {
-                    Debug.Log("앞으로열기");
-                    hit.collider.GetComponent<Animator>().SetTrigger("OpenForward");
-                }
-                else
-                {
-                    Debug.Log("뒤로열기");
-                    hit.collider.GetComponent<Animator>().SetTrigger("OpenBackward");                
+                    if (doorManager.isOpen)
+                    {
+                        if (lastOpenedForward)
+                        {
+                            doorManager.CloseForward(transform);
+                        }
+                        else
+                        {
+                            doorManager.CloseBackward(transform);
+                        }
+                    }
+                    else
+                    {
+                        if (doorManager.Open(transform))
+                        {
+                            lastOpenedForward = doorManager.LastOpenedForward;
+                        }
+                    }
+                    return;
                 }
             }
         }
@@ -856,7 +883,7 @@ public class PlayerManager : MonoBehaviour
         //} //아이템을 먹으면 플레이어의 자식으로 추가하고 다 쓰면 자식에서 나옴        
     }
 
-    void DebugBox(Vector3 origin, Vector3 direction)
+    private void DebugBox(Vector3 origin, Vector3 direction)
     {
         Vector3 endPoint = origin + direction * castDistance;
 
@@ -884,4 +911,10 @@ public class PlayerManager : MonoBehaviour
         Debug.DrawLine(corners[3], corners[7], Color.green, 3.0f);
         Debug.DrawRay(origin, direction * castDistance, Color.green);
     }
+
+    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode) //씬이 로드될 때 호출되는 함수
+    //{
+    //    Debug.Log("Loaded Scene : " + scene.name);
+    //    //플레이어, AI, Item, Weapon
+    //}
 }
