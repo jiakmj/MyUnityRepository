@@ -15,9 +15,9 @@ public class ZombieManager : MonoBehaviour
     public Transform[] patrolPoints; //순찰 경로 지점들
     private int currentPoint = 0; //현재 순찰 경로 지점 인덱스
     public float moveSpeed = 2.0f; //이동속도
-    public float runSpeed = 4.0f; 
+    public float runSpeed = 2.5f; 
     private bool isWalk = false;
-    private float trackingRange = 3.0f; //추적 범위 설정
+    private float trackingRange = 8.0f; //추적 범위 설정
     private bool isAttack = false; //공격 상태
     private float evadeRange = 5.0f; //도망 상태 회피 거리
     private float zombieHp = 100.0f; //좀비의 hp
@@ -40,7 +40,7 @@ public class ZombieManager : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        currentState = EZombieState.Idle; //처음에 어떨지는 나중에 선택하면 됨
+        //currentState = EZombieState.Idle; //처음에 어떨지는 나중에 선택하면 됨
         rb = GetComponent<Rigidbody>(); 
         if (rb == null) //오류방지
         {
@@ -75,7 +75,14 @@ public class ZombieManager : MonoBehaviour
 
         currentState = newState;
 
-        switch (currentState)
+        //if (newState == EZombieState.Die)
+        //{
+        //    agent.isStopped = true;
+        //    agent.velocity = Vector3.zero;
+        //    agent.enabled = false;
+        //}
+
+        switch (newState)
         {
             case EZombieState.Idle:
                 stateRoutine = StartCoroutine(Idle());
@@ -89,9 +96,9 @@ public class ZombieManager : MonoBehaviour
             case EZombieState.Attack:
                 stateRoutine = StartCoroutine(Attack());
                 break;
-            case EZombieState.Evade:
-                stateRoutine = StartCoroutine(Evade());
-                break;
+            //case EZombieState.Evade:
+            //    stateRoutine = StartCoroutine(Evade());
+            //    break;
             case EZombieState.Die:
                 stateRoutine = StartCoroutine(Die());
                 break;
@@ -120,7 +127,7 @@ public class ZombieManager : MonoBehaviour
 
     private IEnumerator Patrol()
     {
-        Debug.Log(gameObject.name + "순찰중");
+        Debug.Log(gameObject.name + "순찰중");        
         animator.Play("Patrol");
 
         while (currentState == EZombieState.Patrol)
@@ -133,7 +140,7 @@ public class ZombieManager : MonoBehaviour
 
                 agent.speed = moveSpeed;
                 agent.isStopped = false;
-                agent.destination = PlayerManager.Instance.transform.position;
+                agent.destination = targetPoint.position;
 
                 //transform.position += direction * moveSpeed * Time.deltaTime;
                 //transform.LookAt(targetPoint.transform);
@@ -151,16 +158,13 @@ public class ZombieManager : MonoBehaviour
                 float distance = Vector3.Distance(transform.position, PlayerManager.Instance.transform.position);
                 if (distance < trackingRange)
                 {
+                    yield return new WaitForSeconds(1.0f);
                     ChangeState(EZombieState.Chase);
                 }
                 else if (distance < attackRange)
                 {
                     ChangeState(EZombieState.Attack);
-                }
-                else if (zombieHp <= 30)
-                {
-                    ChangeState(EZombieState.Evade);
-                }
+                }                
             }
             yield return null;
         }
@@ -193,17 +197,20 @@ public class ZombieManager : MonoBehaviour
             if (distance > trackingRange * 2)
             {
                 ChangeState(EZombieState.Patrol);
+                yield break;
             }
             else if (distance < attackRange)
             {
                 ChangeState(EZombieState.Attack);
             }
-            else if (zombieHp <= 30)
+
+            if (zombieHp <= 30)
             {
                 agent.speed = runSpeed;
-                animator.SetBool("isWalk", false);
-                animator.SetBool("isRun", true);
-                ChangeState(EZombieState.Evade);
+            }
+            else if (zombieHp <= 0)
+            {
+                ChangeState(EZombieState.Die);
             }
             yield return null;
         }
@@ -214,6 +221,7 @@ public class ZombieManager : MonoBehaviour
         Debug.Log(gameObject.name + "공격중");
 
         agent.destination = PlayerManager.Instance.transform.position;
+        agent.speed = moveSpeed;
         //transform.LookAt(target.position);
         animator.SetTrigger("Attack");
 
@@ -229,37 +237,55 @@ public class ZombieManager : MonoBehaviour
         {
             ChangeState(EZombieState.Attack);
         }
-
-        if (zombieHp <= 30)
+        
+        if (zombieHp <= 0)
         {
-            ChangeState(EZombieState.Evade);
+            ChangeState(EZombieState.Die);
         }
     }
     
 
-    private IEnumerator Evade()
-    {
-        Debug.Log(gameObject.name + "도망가는중");
-        animator.SetBool("isWalk", true);            
-        Vector3 evadeDirection = (transform.position - PlayerManager.Instance.transform.position).normalized;
-        float evadeTime = 3.0f;
-        float timer = 0.0f;        
+    //private IEnumerator Evade()
+    //{
+    //    Debug.Log(gameObject.name + "도망가는중");                  
+    //    //Vector3 evadeDirection = (transform.position - PlayerManager.Instance.transform.position).normalized;
+    //    agent.destination = PlayerManager.Instance.transform.position;
+    //    float distance = Vector3.Distance(transform.position, PlayerManager.Instance.transform.position);
 
-        while (currentState == EZombieState.Evade && timer < evadeTime)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(evadeDirection); //LookAt과 Quaternion 차이는 별로 없음 방법이 다를 뿐 상황에 따라 씀
-            transform.rotation = targetRotation;
+    //    agent.speed = runSpeed;
+    //    agent.isStopped = false;
+    //    agent.destination = PlayerManager.Instance.transform.position;
 
-            transform.position += evadeDirection * moveSpeed * Time.deltaTime;
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        ChangeState(EZombieState.Idle);
-    }
+    //    animator.SetBool("isWalk", true);
+
+
+    //    float evadeTime = 3.0f;
+    //    float timer = 0.0f;        
+
+    //    while (currentState == EZombieState.Evade && timer < evadeTime)
+    //    {
+    //        //Quaternion targetRotation = Quaternion.LookRotation(distance); //LookAt과 Quaternion 차이는 별로 없음 방법이 다를 뿐 상황에 따라 씀
+    //        //transform.rotation = targetRotation;
+    //        timer += Time.deltaTime;
+    //        yield return null;
+    //        //Quaternion targetRotation = Quaternion.LookRotation(evadeDirection); //LookAt과 Quaternion 차이는 별로 없음 방법이 다를 뿐 상황에 따라 씀
+    //        //transform.rotation = targetRotation;
+
+    //        //transform.position += evadeDirection * runSpeed * Time.deltaTime;
+    //        //timer += Time.deltaTime;
+    //        //yield return null;
+    //    }
+    //    ChangeState(EZombieState.Idle);
+    //}
 
     private IEnumerator Die()
     {
         Debug.Log(gameObject.name + "사망");
+
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero; //이속 제거
+        agent.enabled = false; //navmeshagent 비활성화
+
         animator.SetTrigger("Die");
         yield return new WaitForSeconds(3.0f);
         gameObject.SetActive(false);
@@ -274,6 +300,9 @@ public class ZombieManager : MonoBehaviour
 
         if (zombieHp <= 0)
         {
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+
             ChangeState(EZombieState.Die);
         }
         else

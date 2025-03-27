@@ -28,10 +28,10 @@ public class SceneController : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        SoundManager.Instance.SetSFXVolume(0.5f); 
-        SoundManager.Instance.PlaySFX("ButtonSound", transform.position); //UI클릭 사운드
-        //딜레이도 넣고
-        SceneManager.LoadScene("map2");
+        //SoundManager.Instance.SetSFXVolume(0.5f); 
+        //SoundManager.Instance.PlaySFX("ButtonSound", transform.position); //UI클릭 사운드
+        ////딜레이도 넣고
+        SceneManager.LoadScene("Smallmap");
 
         Debug.Log("씬 이동 : " + sceneName);
     }
@@ -44,7 +44,7 @@ public class SceneController : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("게임 오버");
-        SceneManager.LoadScene("Game Over");
+        //SceneManager.LoadScene("Game Over");
     }
 
     private void Update()

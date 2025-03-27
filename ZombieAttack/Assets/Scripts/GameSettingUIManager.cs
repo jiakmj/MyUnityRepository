@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameSettingUIManager : MonoBehaviour
 {
@@ -22,16 +24,29 @@ public class GameSettingUIManager : MonoBehaviour
     void Start()
     {
         
-    }  
+    }
 
-    public void OnresolutionLeftClick()
+    public void LoadScene(string sceneName)
+    {        
+        SceneManager.LoadScene("SmallMap");
+
+        Debug.Log("æ¿ ¿Ãµø : " + sceneName);
+    }
+
+    public void ExitScene()
+    {
+        Application.Quit();
+    }
+
+
+    public void OnResolutionLeftClick()
     {
         SoundManager.Instance.PlaySFX("OnSettings", transform.position);
         resolutionIndex = Mathf.Max(0, resolutionIndex - 1);
         UpdateResolutionText();
     }
 
-    public void OnresolutionRightClick()
+    public void OnResolutionRightClick()
     {
         SoundManager.Instance.PlaySFX("OnSettings", transform.position);
         resolutionIndex = Mathf.Min(resolutionIndex - 1, resolutionIndex + 1);
@@ -90,6 +105,7 @@ public class GameSettingUIManager : MonoBehaviour
         Screen.SetResolution(width, height, isFullScreen);
         QualitySettings.SetQualityLevel(qualityIndex);
     }
+
 
     private void SaveSettings()
     {

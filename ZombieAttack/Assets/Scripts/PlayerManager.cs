@@ -167,7 +167,7 @@ public class PlayerManager : MonoBehaviour
         PauseObj.SetActive(false);
 
         RenderSettings.fog = true; //안개 효과 활성화
-        RenderSettings.fogColor = Color.blue; //안개의 색 설정
+        RenderSettings.fogColor = Color.gray; //안개의 색 설정
         RenderSettings.fogDensity = 0.1f; //안개의 밀도 설정
         RenderSettings.fogStartDistance = 10f; //안개 시작 거리와 종료거리 설정(Linear 모드에서 사용)
         RenderSettings.fogEndDistance = 100f;
@@ -182,30 +182,35 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        MouseSet();
 
-        CameraSet();
+        if (!isPause)
+        {
+            MouseSet();
 
-        PlayerMovement();
+            CameraSet();
 
-        PlayerRun();
+            PlayerMovement();
 
-        AimSet();
+            PlayerRun();
 
-        Fire();
+            AimSet();
 
-        ChangeTools();
+            Fire();
 
-        AnimationSet();
+            ChangeTools();
 
-        Operate();
+            AnimationSet();
 
-        Reloading();
+            Operate();
 
-        ActionFlashLight();
+            Reloading();
+
+            ActionFlashLight();
+        }
 
         GameMenu();
 
+        
 
         //1번 방법
         animator.speed = animationSpeed;
@@ -495,7 +500,7 @@ public class PlayerManager : MonoBehaviour
 
     void Reloading()
     {
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading) //R키 누르면 장전
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading && isGetSMGItem && isUseWeapon) //R키 누르면 장전
         {
             if (savebulletCount > 0 && firebulletCount < 30)
             {
@@ -593,7 +598,7 @@ public class PlayerManager : MonoBehaviour
 
                     if (hits.Length > 0)
                     {
-                        for (int i = 0; i < hits.Length && i < 2; i++)
+                        for (int i = 0; i < hits.Length && i < 1; i++)
                         {
                             Debug.Log("충돌 : " + hits[i].collider.name);
 
@@ -601,11 +606,11 @@ public class PlayerManager : MonoBehaviour
                             ParticleSystem particle = Instantiate(DamageParticleSystem, hits[i].point, Quaternion.identity); //프리팹 복제해서 재생
                             DamageParticleSystem.transform.position = hits[i].point; //맞은 위치에서 파티클 나오게
                             particle.Play();
-                            SoundManager.Instance.PlaySFX("zombieGrowl", transform.position);
-                            //audioSource.PlayOneShot(audioClipDamage);
+                            //SoundManager.Instance.PlaySFX("zombieGrowl", transform.position);
+                            audioSource.PlayOneShot(audioClipDamage);
 
                             Debug.DrawLine(ray.origin, hits[i].point, Color.red, 3.0f);
-                            hits[i].collider.GetComponent<ZombieManager>().TakeDamage(30.0f);
+                            hits[i].collider.GetComponent<ZombieManager>().TakeDamage(30.0f);                            
                         }
                     }
                     else
@@ -616,8 +621,8 @@ public class PlayerManager : MonoBehaviour
                 else
                 {
                     //총알이 없는 소리 재생
-                    SoundManager.Instance.PlaySFX("GunEmptySound", transform.position);
-                    //audioSource.PlayOneShot(audioClipBlankAmmo);
+                    //SoundManager.Instance.PlaySFX("GunEmptySound", transform.position);
+                    audioSource.PlayOneShot(audioClipBlankAmmo);
                     Debug.Log("총알없음");                    
                 }
             }
@@ -629,17 +634,17 @@ public class PlayerManager : MonoBehaviour
         //}
     }
 
-    public void TakeDamage(float damage)
-    {
-        if (isDead) return;
+    //public void TakeDamages(float damage)
+    //{
+    //    if (isDead) return;
 
-        playerHp -= damage;
+    //    playerHp -= damage;
 
-        if (playerHp <= 0)
-        {
-            Die();
-        }
-    }
+    //    if (playerHp <= 0)
+    //    {
+    //        Die();
+    //    }
+    //}
 
     void Die()
     {
@@ -691,13 +696,31 @@ public class PlayerManager : MonoBehaviour
     {
         PauseObj.SetActive(false);
         Time.timeScale = 1; //게임 시간 재개
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        isPause = false;
+    }
+
+    public void Retry()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void Pause()
     {
         PauseObj.SetActive(true);
         Time.timeScale = 0; //게임 시간 정지
-        
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        isPause = true;
     }
 
     public void Exit()
@@ -813,39 +836,39 @@ public class PlayerManager : MonoBehaviour
 
     public void WeaponChangeSoundOn()
     {
-        SoundManager.Instance.PlaySFX("GunEmptySound", transform.position);
-        //audioSource.PlayOneShot(audioClipWeaponChange);
+        //SoundManager.Instance.PlaySFX("GunEmptySound", transform.position);
+        audioSource.PlayOneShot(audioClipWeaponChange);
     }
 
     public void FireSoundOn()
     {
-        SoundManager.Instance.PlaySFX("GunFireSound", transform.position);
-        //audioSource.PlayOneShot(audioClipFire);
+        //SoundManager.Instance.PlaySFX("GunFireSound", transform.position);
+        audioSource.PlayOneShot(audioClipFire);
         SMGEffect.Play();
     }
 
     public void PickUpSoundOn()
     {
-        SoundManager.Instance.PlaySFX("PickUpSound", transform.position);
-        //audioSource.PlayOneShot(audioClipPickUp);
+        //SoundManager.Instance.PlaySFX("PickUpSound", transform.position);
+        audioSource.PlayOneShot(audioClipPickUp);
     }
 
     public void FootStepSoundOn()
     {
-        SoundManager.Instance.PlaySFX("LeftFootStepSound", transform.position);
-        //audioSource.PlayOneShot(audioClipFootStep); //발소리재생       
+        //SoundManager.Instance.PlaySFX("LeftFootStepSound", transform.position);
+        audioSource.PlayOneShot(audioClipFootStep); //발소리재생       
     }
 
     public void ReloadingSoundOn()
     {
-        SoundManager.Instance.PlaySFX("GunReloadSound", transform.position);
-        //audioSource.PlayOneShot(audioClipReload); //장전소리 재생    
+        //SoundManager.Instance.PlaySFX("GunReloadSound", transform.position);
+        audioSource.PlayOneShot(audioClipReload); //장전소리 재생    
     }
 
     public void HitSoundOn()
     {
-        SoundManager.Instance.PlaySFX("PlayerPainSound", transform.position);
-        //audioSource.PlayOneShot(audioClipHit); //맞는소리 재생    
+        //SoundManager.Instance.PlaySFX("PlayerPainSound", transform.position);
+        audioSource.PlayOneShot(audioClipHit); //맞는소리 재생    
     }
 
     //public void MovementSoundOn()
