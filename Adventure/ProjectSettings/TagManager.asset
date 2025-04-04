@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - DeadZone
+  - PlayerAttack
   layers:
   - Default
   - TransparentFX
