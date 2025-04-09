@@ -1113,7 +1113,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7213836, y: 0.62485, z: -10}
+  m_LocalPosition: {x: 3.372354, y: 0.92508996, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2747,7 +2747,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1462480322
 Grid:
   m_ObjectHideFlags: 0
@@ -2858,6 +2858,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30178330d84d3c489e5a23332f1b5a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackObjList: []
+  shakeDuration: 0.5
+  shakeMagnitude: 0.1
   attackStateName: Attack
 --- !u!114 &1480808840
 MonoBehaviour:
@@ -2871,6 +2874,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af9111fba173622419a12e268ed301da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invincibilityDuration: 1
+  knockbackForce: 5
+  knockbackDuration: 0.2
+  pauseMenuUI: {fileID: 0}
 --- !u!95 &1480808841
 Animator:
   serializedVersion: 7
@@ -2957,9 +2964,9 @@ Transform:
   m_GameObject: {fileID: 1480808835}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.88, y: -3.4, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -6.88, y: -3.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1900846016}
   m_Father: {fileID: 0}
@@ -2998,8 +3005,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.013324618, y: -0.007560396}
-  m_Size: {x: 0.166042, y: 0.25491855}
+  m_Offset: {x: 0.018552303, y: 0.012368202}
+  m_Size: {x: 1.2767134, y: 1.6627636}
   m_Direction: 0
 --- !u!50 &1480808845
 Rigidbody2D:
@@ -3339,7 +3346,7 @@ Transform:
   m_GameObject: {fileID: 1630372231}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.21, y: 0.62000036, z: -10}
+  m_LocalPosition: {x: -3.21, y: 0.92000055, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3692,6 +3699,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af9111fba173622419a12e268ed301da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invincibilityDuration: 1
+  knockbackForce: 5
+  knockbackDuration: 0.2
+  pauseMenuUI: {fileID: 0}
 --- !u!114 &1744284234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3704,6 +3715,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30178330d84d3c489e5a23332f1b5a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackObjList: []
+  shakeDuration: 0.5
+  shakeMagnitude: 0.1
   attackStateName: Attack
 --- !u!114 &1744284235
 MonoBehaviour:
@@ -4422,7 +4436,7 @@ Transform:
   m_GameObject: {fileID: 1900846015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.136, z: 0}
+  m_LocalPosition: {x: 0.09, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

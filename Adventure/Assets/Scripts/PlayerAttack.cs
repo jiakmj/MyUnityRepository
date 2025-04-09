@@ -54,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
         //float shakeMagnitude = 0.1f;
         StartCoroutine(Shake(shakeDuration, shakeMagnitude));
         //GenerateCameraImpulse();
-        ParticleManager.Instance.ParticlePlay(ParticleType.PlayerAttack, transform.position, new Vector3(3, 3, 3));
+        ParticleManager.Instance.ParticlePlay(ParticleType.PlayerAttack, attackObjList[1].transform.position, new Vector3(3, 3, 3));
         yield return null; //안정성을 위해 일부러 넣음 다음 프레임까지 기다리게 할려고
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
@@ -79,14 +79,14 @@ public class PlayerAttack : MonoBehaviour
         {
             if (attackObjList.Count > 0)
             {
-                attackObjList[0].SetActive(true);
+                attackObjList[0].SetActive(true);                
             }
         }
         else
         {
-            if (attackObjList.Count > 0)
+            if (attackObjList.Count > 1)
             {
-                attackObjList[1].SetActive(true);
+                attackObjList[1].SetActive(true);                
             }
         }
     }
@@ -104,7 +104,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            if (attackObjList.Count > 0)
+            if (attackObjList.Count > 1)
             {
                 attackObjList[1].SetActive(false);
             }
@@ -146,6 +146,7 @@ public class PlayerAttack : MonoBehaviour
     //        impulseSource.GenerateImpulse();
     //    }
     //    else
+
     //    {
     //        Debug.LogWarning("ImpulseSource가 연결이 안 되어있습니다.");
     //    }

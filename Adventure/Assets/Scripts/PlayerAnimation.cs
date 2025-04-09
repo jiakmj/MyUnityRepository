@@ -30,6 +30,11 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetTrigger("Jump");
     }
 
+    public void TriggerHit()
+    {
+        animator.SetTrigger("Hit");
+    }
+
     public void OnPlayWalkSound()
     {
         SoundManager.Instance.PlaySFX(SFXType.StepSound);
