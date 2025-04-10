@@ -84,7 +84,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            if (attackObjList.Count > 1)
+            if (attackObjList.Count > 0)
             {
                 attackObjList[1].SetActive(true);                
             }
@@ -104,7 +104,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            if (attackObjList.Count > 1)
+            if (attackObjList.Count > 0)
             {
                 attackObjList[1].SetActive(false);
             }

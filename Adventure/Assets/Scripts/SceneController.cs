@@ -9,6 +9,7 @@ public class SceneController : MonoBehaviour
     public static SceneController Instance { get; private set; }
 
     public Image panel;
+
     public float fadeDuration = 1.0f;
     public string nextSceneName;
     private bool isFading = false;
@@ -109,6 +110,7 @@ public class SceneController : MonoBehaviour
 
     public void GameStart()
     {
+        Debug.Log("게임시작");
         StartSceneTransition("Tutorial");
     }
 

@@ -188,6 +188,6 @@ public enum BGMType //BGM 종류
 
 public enum SFXType //SFX 종류
 {
-    Attack, HitSound, DamageSound, DeadSound, JumpSound, StepSound, Heal, ItemGet, UISound
+    Attack, HitSound, DamageSound, DeadSound, JumpSound, StepSound, Heal, ItemGet, UISound, Slam
 
 }
