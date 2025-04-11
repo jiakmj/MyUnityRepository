@@ -1,0 +1,1430 @@
+fileFormatVersion: 2
+guid: 02d46f2db1d242544bac67a4771d0e4f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -87967036014233082
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_0
+  - first:
+      213: 4847409111816398089
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_1
+  - first:
+      213: -6622242067490516718
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_2
+  - first:
+      213: -2988895942836649568
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_3
+  - first:
+      213: -8089667153591593095
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_4
+  - first:
+      213: 2386938058477401337
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_5
+  - first:
+      213: 4054259467458833898
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_6
+  - first:
+      213: 1447894182293484603
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_7
+  - first:
+      213: 14869259364786959
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_8
+  - first:
+      213: 4040654886436367774
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_9
+  - first:
+      213: -8463101130805176859
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_10
+  - first:
+      213: -8145804816764334545
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_11
+  - first:
+      213: -487983965698273005
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_12
+  - first:
+      213: -6298353036468255678
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_13
+  - first:
+      213: 4837890269812908330
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_14
+  - first:
+      213: 1664176377694783616
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_15
+  - first:
+      213: 7840539030118958940
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_16
+  - first:
+      213: -1069454592961106740
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_17
+  - first:
+      213: 3273400680933286390
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_18
+  - first:
+      213: -3599446683919404613
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_19
+  - first:
+      213: 5406907479291473383
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_20
+  - first:
+      213: 5418044204505679294
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_21
+  - first:
+      213: -3835150586206188990
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_22
+  - first:
+      213: -4729627143270476079
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_23
+  - first:
+      213: -6976047862388691757
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_24
+  - first:
+      213: -7230045954480738146
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_25
+  - first:
+      213: 5582354665684756498
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_26
+  - first:
+      213: 2093341746530381525
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_27
+  - first:
+      213: 4340361942134221262
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_28
+  - first:
+      213: -7247483341739867156
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_29
+  - first:
+      213: 4935738062796235360
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_30
+  - first:
+      213: -3865193370899996380
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_31
+  - first:
+      213: -3089027061589836299
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_32
+  - first:
+      213: 8243377181594208684
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_33
+  - first:
+      213: -6442688609805236871
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_34
+  - first:
+      213: 685181052540358664
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_35
+  - first:
+      213: 7964395627801029756
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_36
+  - first:
+      213: -2166475660906595224
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_37
+  - first:
+      213: -7818564680274233808
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_38
+  - first:
+      213: -631215549254308486
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_39
+  - first:
+      213: 8209387208934127971
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_40
+  - first:
+      213: -4506927704250546650
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_41
+  - first:
+      213: -9113624887253301633
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_42
+  - first:
+      213: 5304891934576106910
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_43
+  - first:
+      213: 738673152102696552
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_44
+  - first:
+      213: 2253921698342915704
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_45
+  - first:
+      213: 3379028905038690520
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_46
+  - first:
+      213: -4190252709030764220
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_47
+  - first:
+      213: 4083174841960311341
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_48
+  - first:
+      213: 8784231636538347177
+    second: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_49
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 164
+        width: 32
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60a7d62627a77cef0800000000000000
+      internalID: -87967036014233082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 166
+        width: 26
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 905eece87e4754340800000000000000
+      internalID: 4847409111816398089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_2
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 162
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 211549efce11914a0800000000000000
+      internalID: -6622242067490516718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_3
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 161
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a18d90d9fe4586d0800000000000000
+      internalID: -2988895942836649568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_4
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 162
+        width: 24
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 977170fa59abbbf80800000000000000
+      internalID: -8089667153591593095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_5
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 164
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f4f764848b102120800000000000000
+      internalID: 2386938058477401337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_6
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 165
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aede529518f934830800000000000000
+      internalID: 4054259467458833898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_7
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 172
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3435f76614f71410800000000000000
+      internalID: 1447894182293484603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_8
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 165
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f03e28a3383d43000800000000000000
+      internalID: 14869259364786959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_9
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 163
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9d6cfdf53a431830800000000000000
+      internalID: 4040654886436367774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_10
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 135
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e596286c560d8a80800000000000000
+      internalID: -8463101130805176859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_11
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 130
+        width: 29
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2e881f6da944fe80800000000000000
+      internalID: -8145804816764334545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_12
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 133
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 311d77c2b255a39f0800000000000000
+      internalID: -487983965698273005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_13
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 130
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2448e4f8841c798a0800000000000000
+      internalID: -6298353036468255678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_14
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 128
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2164827193a32340800000000000000
+      internalID: 4837890269812908330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_15
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 128
+        width: 26
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 088081c2997581710800000000000000
+      internalID: 1664176377694783616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_16
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 130
+        width: 28
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5783d9f4b03fcc60800000000000000
+      internalID: 7840539030118958940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_17
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 132
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccca423c6b88821f0800000000000000
+      internalID: -1069454592961106740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_18
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 97
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f1ec8a73947d6d20800000000000000
+      internalID: 3273400680933286390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_19
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 97
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb1b609cf423c0ec0800000000000000
+      internalID: -3599446683919404613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_20
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 99
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ed229494b1390b40800000000000000
+      internalID: 5406907479291473383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_21
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 98
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb5ccea7f72c03b40800000000000000
+      internalID: 5418044204505679294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_22
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 100
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24a8c018cdec6cac0800000000000000
+      internalID: -3835150586206188990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_23
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 100
+        width: 34
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d6515dfb2dfc5eb0800000000000000
+      internalID: -4729627143270476079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_24
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 99
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dce23a0e69103f90800000000000000
+      internalID: -6976047862388691757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_25
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 99
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e90fc65c287b9ab90800000000000000
+      internalID: -7230045954480738146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_26
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 70
+        width: 27
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 218626aedf1887d40800000000000000
+      internalID: 5582354665684756498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_27
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 71
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5de607b3a3b0d0d10800000000000000
+      internalID: 2093341746530381525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_28
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 66
+        width: 30
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec9e88da0301c3c30800000000000000
+      internalID: 4340361942134221262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_29
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 65
+        width: 29
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce3c80cac44cb6b90800000000000000
+      internalID: -7247483341739867156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_30
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 65
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06228511e934f7440800000000000000
+      internalID: 4935738062796235360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_31
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 68
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 421af4b9b131c5ac0800000000000000
+      internalID: -3865193370899996380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_32
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 67
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fd7e5cf0429125d0800000000000000
+      internalID: -3089027061589836299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_33
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 67
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca9cb721fdb566270800000000000000
+      internalID: 8243377181594208684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_34
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 65
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9758a1e18d8f696a0800000000000000
+      internalID: -6442688609805236871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_35
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 35
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8001f7b7980428900800000000000000
+      internalID: 685181052540358664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_36
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 35
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7c21c550a7378e60800000000000000
+      internalID: 7964395627801029756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_37
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 35
+        width: 25
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86cf1296dd12fe1e0800000000000000
+      internalID: -2166475660906595224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_38
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 35
+        width: 30
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 036b6da09d0ee7390800000000000000
+      internalID: -7818564680274233808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_39
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 34
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7d6ef16dc87d37f0800000000000000
+      internalID: -631215549254308486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_40
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 32
+        width: 26
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 369772cdb2a9de170800000000000000
+      internalID: 8209387208934127971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_41
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 32
+        width: 26
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62687c7b12d2471c0800000000000000
+      internalID: -4506927704250546650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_42
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 34
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f768b1b7376e58180800000000000000
+      internalID: -9113624887253301633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_43
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 4
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9d5e34ab13ce9940800000000000000
+      internalID: 5304891934576106910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_44
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 4
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8660334715b404a00800000000000000
+      internalID: 738673152102696552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_45
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 4
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87e4645c7d9874f10800000000000000
+      internalID: 2253921698342915704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_46
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 4
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d8bb92e2e8b4ee20800000000000000
+      internalID: 3379028905038690520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_47
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 4
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4416a1fac5b39d5c0800000000000000
+      internalID: -4190252709030764220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_48
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 1
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2a2bda92e95aa830800000000000000
+      internalID: 4083174841960311341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_49
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 0
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aecd90f12cd7e970800000000000000
+      internalID: 8784231636538347177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_0: -87967036014233082
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_1: 4847409111816398089
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_10: -8463101130805176859
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_11: -8145804816764334545
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_12: -487983965698273005
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_13: -6298353036468255678
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_14: 4837890269812908330
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_15: 1664176377694783616
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_16: 7840539030118958940
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_17: -1069454592961106740
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_18: 3273400680933286390
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_19: -3599446683919404613
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_2: -6622242067490516718
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_20: 5406907479291473383
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_21: 5418044204505679294
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_22: -3835150586206188990
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_23: -4729627143270476079
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_24: -6976047862388691757
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_25: -7230045954480738146
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_26: 5582354665684756498
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_27: 2093341746530381525
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_28: 4340361942134221262
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_29: -7247483341739867156
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_3: -2988895942836649568
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_30: 4935738062796235360
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_31: -3865193370899996380
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_32: -3089027061589836299
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_33: 8243377181594208684
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_34: -6442688609805236871
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_35: 685181052540358664
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_36: 7964395627801029756
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_37: -2166475660906595224
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_38: -7818564680274233808
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_39: -631215549254308486
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_4: -8089667153591593095
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_40: 8209387208934127971
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_41: -4506927704250546650
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_42: -9113624887253301633
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_43: 5304891934576106910
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_44: 738673152102696552
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_45: 2253921698342915704
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_46: 3379028905038690520
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_47: -4190252709030764220
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_48: 4083174841960311341
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_49: 8784231636538347177
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_5: 2386938058477401337
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_6: 4054259467458833898
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_7: 1447894182293484603
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_8: 14869259364786959
+      All_Color_02_Legends_Of_Fantasy_32x32_(NoOutline)_9: 4040654886436367774
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
