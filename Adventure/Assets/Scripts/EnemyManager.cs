@@ -204,7 +204,13 @@ public class EnemyManager : MonoBehaviour
         {
             StartCoroutine(ChangeColorTemporatily());
         }
+        //else if (collision.CompareTag("DeadZone"))
+        //{
+        //    SoundManager.Instance.PlaySFX(SFXType.DeadSound);
+        //    // »ç¸Á
+        //}
     }
+
 
     IEnumerator ChangeColorTemporatily()
     {

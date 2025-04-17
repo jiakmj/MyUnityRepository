@@ -1,14 +1,31 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator animator;
+    private bool isBow = false;
+    private int bowLayerIndex = 1;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
-    
+
+    public void ToggleBow()
+    {
+        isBow = !isBow;
+        animator.SetLayerWeight(bowLayerIndex, isBow ? 1f : 0f);
+    }
+
+    public bool IsBow() => isBow;
+
+    public void TriggerBowAttack()
+    {
+        animator.SetTrigger("BowAttack");
+        SoundManager.Instance.PlaySFX(SFXType.Attack);
+    }
+
     public void TriggerAttack()
     {
         animator.SetTrigger("Attack");
@@ -25,6 +42,11 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("isRunning", isRunning);
     }
 
+    public void SetPushing(bool ispushing)
+    {
+        animator.SetBool("ispushing", ispushing);
+    }
+
     public void TriggerJump()
     {
         animator.SetTrigger("Jump");
@@ -33,6 +55,11 @@ public class PlayerAnimation : MonoBehaviour
     public void TriggerHit()
     {
         animator.SetTrigger("Hit");
+    }
+
+    public void TriggerDead()
+    {
+        animator.SetTrigger("Dead");
     }
 
     public void OnPlayWalkSound()
@@ -44,27 +71,4 @@ public class PlayerAnimation : MonoBehaviour
     {
         SoundManager.Instance.PlaySFX(SFXType.JumpSound);
     }
-
-    //public void OnPlayLandingSound()
-    //{
-
-    //}
-
-
-    //public void SetJumping(bool isJumping)
-    //{
-    //    animator.SetBool("isJumping", isJumping);
-    //}
-
-    //public void SetFalling(bool isFalling)
-    //{
-    //    animator.SetBool("isFalling", isFalling);
-    //}
-
-    //public void PlayLanding()
-    //{
-    //    animator.SetTrigger("Land");
-    //    animator.SetBool("isJumping", false);
-    //    animator.SetBool("isFalling", false);
-    //}
 }

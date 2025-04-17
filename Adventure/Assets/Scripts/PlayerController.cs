@@ -41,11 +41,16 @@ public class PlayerController : MonoBehaviour
         if (!isKnockback)
         {
             movement.HandleMovement();
-        }
+        }        
 
         if (Input.GetButtonDown("Fire1") && !isKnockback)
         {
             attack.PerformAttack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GetComponent<PlayerAnimation>().ToggleBow();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))

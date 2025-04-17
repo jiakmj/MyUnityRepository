@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerAnimation playerAnimation;
 
+    public GameObject bowObject;   
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -37,8 +39,21 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveInput != 0) 
         {
-            GetComponent<SpriteRenderer>().flipX = moveInput < 0; //좌우반전
+            bool isFlipped = moveInput < 0;
+            GetComponent<SpriteRenderer>().flipX = isFlipped; //좌우반전
             //Debug.Log("이동 입력 : " + moveInput);
+            {
+                if (bowObject != null)
+                {
+                    Vector3 scale = bowObject.transform.localScale;
+                    scale.x = Mathf.Abs(scale.x) * (isFlipped ? -1 : 1);
+                    bowObject.transform.localScale = scale;
+
+                    Vector3 pos = bowObject.transform.localPosition;
+                    pos.x = isFlipped ? -0.29f : 0.259f;
+                    bowObject.transform.localPosition = pos;
+                }
+            }
         }
 
         if (Input.GetKey(KeyCode.LeftShift))

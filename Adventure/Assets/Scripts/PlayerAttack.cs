@@ -7,9 +7,16 @@ public class PlayerAttack : MonoBehaviour
 {
     private PlayerAnimation playerAnimation;
     private Animator animator;
+
+    public ArrowShoot arrowShoot;
+
     public List<GameObject> attackObjList = new List<GameObject>();
 
+    public GameObject bowObject;
+    private Animator bowAnimator;
+
     private bool isAttacking = false;
+    private float attackDelay = 1f;
 
     public float shakeDuration = 0.5f;
     public float shakeMagnitude = 0.1f;
@@ -26,7 +33,18 @@ public class PlayerAttack : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         animator = GetComponent<Animator>();
 
-        if (Camera.main != null )
+        if (bowObject != null)
+        {
+            bowAnimator = bowObject.GetComponent<Animator>();
+            bowObject.SetActive(false);
+        }
+
+        if (arrowShoot != null)
+        {
+            arrowShoot.playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        if (Camera.main != null)
         {
             originalPos = Camera.main.transform.localPosition;
         }
@@ -39,7 +57,30 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
-        if (playerAnimation != null)
+        if (playerAnimation.IsBow())
+        {
+            playerAnimation.TriggerBowAttack();
+
+            if (bowObject != null)
+            {
+                bowObject.SetActive(true);
+            }
+
+            if (bowAnimator != null)
+            {
+                AnimatorStateInfo bowState = bowAnimator.GetCurrentAnimatorStateInfo(0);
+                if (!bowState.IsName("BowAttack"))
+                {
+                    bowAnimator.ResetTrigger("BowAttack");
+                    bowAnimator.SetTrigger("BowAttack");
+                }
+            }
+            if (arrowShoot != null)
+            {
+                arrowShoot.Fire();
+            }
+        }
+        else
         {
             playerAnimation.TriggerAttack();
         }
@@ -52,23 +93,39 @@ public class PlayerAttack : MonoBehaviour
         isAttacking = true;
         //float shakeDuration = 0.1f;
         //float shakeMagnitude = 0.1f;
-        StartCoroutine(Shake(shakeDuration, shakeMagnitude));
+        //StartCoroutine(Shake(shakeDuration, shakeMagnitude));
         //GenerateCameraImpulse();
-        ParticleManager.Instance.ParticlePlay(ParticleType.PlayerAttack, attackObjList[1].transform.position, new Vector3(3, 3, 3));
-        yield return null; //안정성을 위해 일부러 넣음 다음 프레임까지 기다리게 할려고
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-        if (stateInfo.IsName(attackStateName)) //attack 애니메이션을 하고 있으면
+        //ParticleManager.Instance.ParticlePlay(ParticleType.PlayerAttack, attackObjList[1].transform.position, new Vector3(3, 3, 3));
+        //yield return null; //안정성을 위해 일부러 넣음 다음 프레임까지 기다리게 할려고
+        
+        float waitTime = 0.5f;
+        if (playerAnimation.IsBow() && bowAnimator != null)
         {
-            float animationLength = stateInfo.length; //애니메이션 모션 길이만큼 기다림
-            yield return new WaitForSeconds(animationLength);
+            AnimatorStateInfo bowState = bowAnimator.GetCurrentAnimatorStateInfo(0);
+            if (bowState.IsName("BowMiddleArrowAni"))
+            {
+                waitTime = bowState.length;
+            }
         }
-        else 
+        else
         {
-            yield return new WaitForSeconds(0.5f);
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("PlayerAttack1Ani") || stateInfo.IsName("BowAttackAni")) //attack 애니메이션을 하고 있으면
+            {
+                waitTime = stateInfo.length;
+            }
         }
 
-        isAttacking = false; //모션 끝나면 false로 돌림
+        yield return new WaitForSeconds(waitTime);
+
+
+        if (playerAnimation.IsBow() && bowObject != null)
+        {
+            bowObject.SetActive(false);
+        }
+
+
+        isAttacking = false; //모션 끝나면 false로 돌림               
     }
 
     public void AttackStart()
@@ -79,14 +136,14 @@ public class PlayerAttack : MonoBehaviour
         {
             if (attackObjList.Count > 0)
             {
-                attackObjList[0].SetActive(true);                
+                attackObjList[0].SetActive(true);
             }
         }
         else
         {
             if (attackObjList.Count > 0)
             {
-                attackObjList[1].SetActive(true);                
+                attackObjList[1].SetActive(true);
             }
         }
     }
@@ -111,32 +168,32 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private IEnumerator Shake(float duration, float magnitude)
-    {
-        originalPos = Camera.main.transform.localPosition;
-        Camera.main.GetComponent<CinemachineBrain>().enabled = false;
-        if (Camera.main == null)
-        {
-            yield return null;
-        }
+    //private IEnumerator Shake(float duration, float magnitude)
+    //{
+    //    originalPos = Camera.main.transform.localPosition;
+    //    Camera.main.GetComponent<CinemachineBrain>().enabled = false;
+    //    if (Camera.main == null)
+    //    {
+    //        yield return null;
+    //    }
 
-        float elapsed = 0.0f;
+    //    float elapsed = 0.0f;
 
-        while (elapsed < duration)
-        {
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
+    //    while (elapsed < duration)
+    //    {
+    //        float x = Random.Range(-1f, 1f) * magnitude;
+    //        float y = Random.Range(-1f, 1f) * magnitude;
 
-            Camera.main.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x, originalPos.y + y, -10);
+    //        Camera.main.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x, originalPos.y + y, -10);
 
-            elapsed += Time.deltaTime;
+    //        elapsed += Time.deltaTime;
 
-            yield return null;
-        }
+    //        yield return null;
+    //    }
 
-        Camera.main.transform.localPosition = originalPos;
-        Camera.main.GetComponent<CinemachineBrain>().enabled = true;
-    }
+    //    Camera.main.transform.localPosition = originalPos;
+    //    Camera.main.GetComponent<CinemachineBrain>().enabled = true;
+    //}
 
     //private void GenerateCameraImpulse()
     //{

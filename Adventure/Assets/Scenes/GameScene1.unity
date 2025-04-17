@@ -1215,10 +1215,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorChangeDuration: 0.5
+  hp: 10
+  damage: 1
   speed: 2
   maxDistance: 3
   currentGroundType: 0
   monsterType: 0
+  stateType: 0
+  player: {fileID: 0}
+  jumpHeight: 2
+  jumpDuration: 1
+  isAttack: 0
+  chaseRange: 5
+  attackRange: 1.5
 --- !u!1 &420296202
 GameObject:
   m_ObjectHideFlags: 0
@@ -8232,6 +8241,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  bowObject: {fileID: 0}
+  offsetX: 0.33
 --- !u!114 &1744284232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8272,7 +8283,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30178330d84d3c489e5a23332f1b5a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrowShoot: {fileID: 0}
   attackObjList: []
+  bowObject: {fileID: 0}
   shakeDuration: 0.5
   shakeMagnitude: 0.1
   attackStateName: Attack
