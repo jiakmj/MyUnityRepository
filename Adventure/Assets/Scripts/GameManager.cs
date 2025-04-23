@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     private const string ATTACK_SPEED_KEY = "PlayerAttackSpeed";
     private const string MOVE_SPEED_KEY = "PlayerMoveSpeed";
     private const string HP_KEY = "PlayerHP";
-    private const string HINT_KEY = "PlayHint";
 
     private void Awake()
     {

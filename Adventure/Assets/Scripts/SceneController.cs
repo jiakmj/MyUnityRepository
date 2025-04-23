@@ -1,17 +1,15 @@
-using System.Collections;
-using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System.Collections;
 
 public class SceneController : MonoBehaviour
 {
     public static SceneController Instance { get; private set; }
 
     public Image panel;
-
     public float fadeDuration = 1.0f;
-    public string nextSceneName;
     private bool isFading = false;
 
     private void Awake()
@@ -31,22 +29,36 @@ public class SceneController : MonoBehaviour
     {
         if (!isFading)
         {
-            nextSceneName = sceneName;
-            StartCoroutine(FadeInAndLoadScene());
+            StartCoroutine(FadeInAndLoadScene(sceneName));
         }
     }
 
-    IEnumerator FadeInAndLoadScene()
+    private IEnumerator FadeInAndLoadScene(string sceneName)
     {
         isFading = true;
+
+        yield return new WaitUntil(() => panel != null);
+
+        panel.gameObject.SetActive(true);
         yield return StartCoroutine(FadeImage(0, 1, fadeDuration));
-        yield return StartCoroutine(LoadLoadingAndNextScene());
+
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+        asyncOperation.allowSceneActivation = true;
+
+        yield return asyncOperation;
+
+        // 씬 전환 완료 후 다시 panel 연결 (중요!!!)
+        yield return new WaitUntil(() => panel != null);  // 씬 전환 직후 새로 연결될 수 있음
+
+        // 씬에 맞는 UI 초기화
+        UIManager.Instance.InitializeUI(4, 4); // 예시 값, 필요에 따라 수정
+
         yield return StartCoroutine(FadeImage(1, 0, fadeDuration));
-        isFading = false;
         panel.gameObject.SetActive(false);
+        isFading = false;
     }
 
-    IEnumerator FadeImage(float startAlpha, float endAlpha, float duration)
+    private IEnumerator FadeImage(float startAlpha, float endAlpha, float duration)
     {
         float elapsedTime = 0f;
         Color panelColor = panel.color;
@@ -64,45 +76,6 @@ public class SceneController : MonoBehaviour
         panel.color = panelColor;
     }
 
-    IEnumerator LoadLoadingAndNextScene()
-    {
-        AsyncOperation loadingSceneOp = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
-        loadingSceneOp.allowSceneActivation = false;
-
-        while (!loadingSceneOp.isDone)
-        {
-            if (loadingSceneOp.progress >= 0.9f)
-            {
-                loadingSceneOp.allowSceneActivation = true;
-            }
-            yield return null;
-        }
-
-        Slider loadingSlider = null;
-        GameObject sliderObj = GameObject.Find("LoadingSlider");
-        if (sliderObj != null)
-        {
-            loadingSlider = sliderObj.GetComponent<Slider>();
-        }
-        AsyncOperation nextSceneOp = SceneManager.LoadSceneAsync(nextSceneName);
-        while (!nextSceneOp.isDone)
-        {
-            if (loadingSlider != null)
-            {
-                loadingSlider.value = nextSceneOp.progress;
-            }
-            yield return null;
-        }
-        if (SceneManager.GetSceneByName("LoadingScene").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("LoadingScene");
-        }
-        else
-        {
-            Debug.Log("로딩씬 not Load");
-        }
-    }
-    
     public void ExitScene()
     {
         Application.Quit();
@@ -113,10 +86,25 @@ public class SceneController : MonoBehaviour
         Debug.Log("게임시작");
         StartSceneTransition("Tutorial");
     }
-
-    public void GameOption()
+    private void OnEnable()
     {
-
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (panel == null)
+        {
+            panel = GameObject.Find("FadePanel")?.GetComponent<Image>();
+            if (panel == null)
+            {
+                Debug.LogWarning("FadePanel not found in the scene.");
+            }
+        }
+    }
 }

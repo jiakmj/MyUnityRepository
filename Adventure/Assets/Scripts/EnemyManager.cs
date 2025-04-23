@@ -39,6 +39,8 @@ public class EnemyManager : MonoBehaviour
     public bool isAttack = false;
     public float chaseRange = 5.0f;
     public float attackRange = 1.5f;
+    public float attackCooldown = 3.0f;
+    private float lastAttackTime = 0f;
 
     private float stateChangeInterval = 3.0f;
     private Coroutine stateChangeRoutine;
@@ -65,136 +67,118 @@ public class EnemyManager : MonoBehaviour
     }
 
     private void Update()
-    {
-        if (monsterType == MonsterType.None || player == null) return;
+    {        
+        if (monsterType == MonsterType.None || player == null || isAttack) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if (distanceToPlayer <= attackRange && !isAttack)
+        MonsterAttack(distanceToPlayer);
+
+        if (!isAttack)
+        {
+            MonsterChase(distanceToPlayer);
+            MonsterIdleOrPatrol(distanceToPlayer);
+        }
+    }
+
+    private void MonsterAttack(float distanceToPlayer)
+    {
+        if (distanceToPlayer <= attackRange && !isAttack && Time.time >= lastAttackTime + attackCooldown)
         {
             if (stateType != StateType.Attack)
             {
+                isAttack = true;
                 StopAllCoroutines();
                 stateType = StateType.StrongAttack;
                 StartCoroutine(AttackRoutine());
+                lastAttackTime = Time.time;
 
             }
             return;
         }
+    }
+
+    private void MonsterChase(float distanceToPlayer)
+    {
+        if (stateType == StateType.StrongAttack || stateType == StateType.Attack)
+            return;
+
         if (distanceToPlayer <= chaseRange)
         {
-            if (stateType != StateType.ChaseWalk && stateType != StateType.ChaseRun)
-            {
-                if (stateChangeRoutine != null)
-                {
-                    StopCoroutine(stateChangeRoutine);
-                }
-                int chaseType = Random.Range(0, 2);
-                stateType = chaseType == 0 ? StateType.ChaseWalk : StateType.ChaseRun;
-                animator.Play("SlimeMove");
-                Debug.Log($"[상태 변환] 추적 상태 : {stateType}");                
-            }
-
             Vector3 directiontoPlayer = (player.position - transform.position).normalized;
             float chaseSpeed = stateType == StateType.ChaseRun ? speed * 2 : speed;
+
+            if (directiontoPlayer.x < 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else if (directiontoPlayer.x > 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+
             transform.position += directiontoPlayer * chaseSpeed * Time.deltaTime;
+            animator.SetBool("isWalk", true);
             return;
         }
+    }
+
+    private void MonsterIdleOrPatrol(float distanceToPlayer)
+    {
+        if (stateType == StateType.StrongAttack || stateType == StateType.Attack)
+            return;
 
         if ((stateType == StateType.ChaseWalk || stateType == StateType.ChaseRun) && distanceToPlayer > chaseRange)
         {
             Debug.Log("[상태 복귀] 추적 종료");
             stateType = StateType.Idle;
+            animator.SetBool("isWalk", false);
             animator.Play("SlimeIdle1");
             if (stateChangeRoutine == null)
             {
                 stateChangeRoutine = StartCoroutine(RandomStateChanger());
             }
-            if (stateType == StateType.Attack) return;
+            // if (stateType == StateType.Attack) return;
             PatrolMovement();
-
         }
-
-        //    if (monsterType != MonsterType.None)
-        //    {
-        //        if (currentGroundType == GroundType.UpGround && stateType == StateType.PatrolWalk)
-        //        {
-        //            if (transform.position.y > startPos.y + maxDistance)
-        //            {
-        //                direction = -1;                   
-        //            }
-        //            else if (transform.position.y < startPos.y - maxDistance)
-        //            {
-        //                direction = 1;
-        //            }
-        //            transform.position += new Vector3(0, speed * direction * Time.deltaTime, 0);
-        //        }
-        //        else if (currentGroundType == GroundType.UpGround && stateType == StateType.PatrolRun)
-        //        {
-        //            if (transform.position.y > startPos.y + maxDistance)
-        //            {
-        //                direction = -1;
-        //                speed *= 2;
-        //            }
-        //            else if (transform.position.y < startPos.y - maxDistance)
-        //            {
-        //                direction = 1;
-        //                speed *= 2;
-        //            }
-        //            transform.position += new Vector3(0, speed * direction * Time.deltaTime, 0);
-        //        }
-        //        else
-        //        {
-        //            if (transform.position.x > startPos.x + maxDistance)
-        //            {
-        //                direction = -1;
-        //                GetComponent<SpriteRenderer>().flipX = true;
-        //            }
-        //            else if (transform.position.x < startPos.x - maxDistance)
-        //            {
-        //                direction = 1;
-        //                GetComponent<SpriteRenderer>().flipX = false;
-        //            }
-        //            transform.position += new Vector3(speed * direction * Time.deltaTime, 0, 0);
-        //        }
-    
     }
 
     private void PatrolMovement()
     {
+
+        animator.SetBool("isWalk", true);
+        if (currentGroundType == GroundType.UpGround)
         {
-            if (currentGroundType == GroundType.UpGround)
+            if (stateType == StateType.PatrolWalk || stateType == StateType.PatrolRun)
             {
-                if (stateType == StateType.PatrolWalk || stateType == StateType.PatrolRun)
-                {
-                    if (transform.position.y > startPos.y + maxDistance)
-                    {
-                        direction = -1;
-                    }
-                    else if (transform.position.y <  startPos.y - maxDistance)
-                    {
-                        direction = 1;
-                    }
-                    float movespeed = stateType == StateType.PatrolRun ? speed * 2 : speed;
-                    transform.position += new Vector3(0, movespeed * direction * Time.deltaTime, 0);
-                }
-            }
-            else
-            {
-                if(transform.position.x > startPos.x + maxDistance)
+                if (transform.position.y > startPos.y + maxDistance)
                 {
                     direction = -1;
-                    GetComponent<SpriteRenderer>().flipX = true;
                 }
-                else if (transform.position.x < startPos.x - maxDistance)
+                else if (transform.position.y < startPos.y - maxDistance)
                 {
                     direction = 1;
-                    GetComponent<SpriteRenderer>().flipX = false;
                 }
-
-                transform.position += new Vector3(speed * direction * Time.deltaTime, 0, 0);
+                float movespeed = stateType == StateType.PatrolRun ? speed * 2 : speed;
+                transform.position += new Vector3(0, movespeed * direction * Time.deltaTime, 0);
             }
         }
+        else
+        {
+            if (transform.position.x > startPos.x + maxDistance)
+            {
+                direction = -1;
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else if (transform.position.x < startPos.x - maxDistance)
+            {
+                direction = 1;
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+
+            transform.position += new Vector3(speed * direction * Time.deltaTime, 0, 0);
+        }
+
     }
 
 
@@ -215,7 +199,7 @@ public class EnemyManager : MonoBehaviour
     IEnumerator ChangeColorTemporatily()
     {
         SoundManager.Instance.PlaySFX(SFXType.DamageSound);
-        animator.Play("SlimeHit");
+        animator.SetTrigger("Hit");
         objectRenderer.material.color = Color.red;
         yield return new WaitForSeconds(colorChangeDuration);
         objectRenderer.material.color = originalColor;
@@ -234,15 +218,61 @@ public class EnemyManager : MonoBehaviour
 
     IEnumerator AttackRoutine()
     {
-        isAttack = true;
-        Debug.Log("[공격 상태] 공격 시작");
-        animator.Play("SlimeHit");
-        yield return new WaitForSeconds(1.0f);
+        isAttack = true;        
+
+        if (player != null)
+        {
+            Vector3 dirToPlayer = player.position - transform.position;
+            if (dirToPlayer.x < 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+        }
+
+        animator.SetTrigger("Attack");
+               
+        yield return new WaitForSeconds(1f); // 후딜
+
         isAttack = false;
         Debug.Log("[공격 상태] 공격 종료, 상태 복귀");
+
+        if (stateChangeRoutine != null)
+        {
+            StopCoroutine(stateChangeRoutine);
+        }
+
+        stateType = StateType.Idle; 
 
         stateChangeRoutine = StartCoroutine(RandomStateChanger());
     }
 
+    public void ApplyDamage()
+    {
+        Debug.Log($"[몬스터 공격] ApplyDamage() 호출됨. Time: {Time.time}");
+
+        if (player != null)
+        {
+            float distance = Vector2.Distance(transform.position, player.position);
+            if (distance <= attackRange)
+            {
+                PlayerController pc = player.GetComponent<PlayerController>();
+                if (pc != null && !pc.IsInvincible())
+                {
+                    pc.TriggerDamageEffects();
+                }
+            }
+        }
+    }
+    /* 이펙트
+     * if (spriteRenderer.flipX)
+    attackEffect.transform.localScale = new Vector3(-1, 1, 1); // 왼쪽
+else
+    attackEffect.transform.localScale = new Vector3(1, 1, 1); // 오른쪽
+
+     */
 
 }

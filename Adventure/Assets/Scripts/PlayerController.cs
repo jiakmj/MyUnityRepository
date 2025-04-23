@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerMovement movement;
     private PlayerAttack attack;
-    private PlayerHealth health;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -17,15 +16,13 @@ public class PlayerController : MonoBehaviour
     private bool isKnockback = false;
     public float knockbackDuration = 0.2f;
 
-    private Vector3 StartPlayerPos;
-    private bool isPaused = false;
-    public GameObject pauseMenuUI;
+    private Color originalColor;
+    private Vector3 StartPlayerPos;   
 
     private void Awake()
     {
         movement = GetComponent<PlayerMovement>();
         attack = GetComponent<PlayerAttack>();
-        health = GetComponent<PlayerHealth>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -34,6 +31,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         StartPlayerPos = transform.position;
+        originalColor = spriteRenderer.color;
     }
 
     void Update()
@@ -55,39 +53,20 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
+            if (UIManager.Instance != null)
             {
-                ReGame();
-            }
-            else
-            {
-                Pause();
+               if (Time.timeScale == 0f)
+               {
+                    UIManager.Instance.Return();
+               }
+               else
+               {
+                    UIManager.Instance.Pause();
+               }
             }
         }
     }
-
-    public void Pause()
-    {
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        isPaused = true;
-        SoundManager.Instance.PlaySFX(SFXType.UISound);
-    }
-
-    public void ReGame()
-    {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1.0f;
-        isPaused = false;
-        SoundManager.Instance.PlaySFX(SFXType.UISound);
-    }
-
-    public void MenuOn()
-    {
-        SoundManager.Instance.PlaySFX(SFXType.UISound);
-        //SoundManager.LoadScene("Menu");
-    }    
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Coin"))
@@ -106,17 +85,24 @@ public class PlayerController : MonoBehaviour
             float shakeDuration = 0.1f;
             float shakeMagnitude = 0.3f;
             //StartCoroutine(playerAttack.Shake(shakeDuration, shakeMagnitude));
+        }
+    }
 
-            if (!isInvincible)
-            {
-                SoundManager.Instance.PlaySFX(SFXType.HitSound);
-                StartCoroutine(Invincibility());
+    public void TriggerDamageEffects()
+    {
+        if (!isInvincible)
+        {            
+            StartCoroutine(Invincibility());
 
-                Vector2 knockbackDirection = spriteRenderer.flipX ? Vector2.right : Vector2.left;
-                rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
-                animator.SetTrigger("Hit");
-                StartCoroutine(KnockbackCoroutine());                
-            }
+            PlayerState.Instance.TakeDamage(1);
+            SoundManager.Instance.PlaySFX(SFXType.HitSound);
+
+            StartCoroutine(Invincibility());
+
+            Vector2 knockbackDirection = spriteRenderer.flipX ? Vector2.right : Vector2.left;
+            rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+            //animator.SetTrigger("Hit");
+            StartCoroutine(KnockbackCoroutine());
         }
     }
 
@@ -127,8 +113,6 @@ public class PlayerController : MonoBehaviour
         float elapsedTime = 0f;
         float blinkInterval = 0.2f;
 
-        Color originalColor = spriteRenderer.color;
-
         while(elapsedTime < invincibilityDuration)
         {
             spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0.4f);
@@ -136,16 +120,23 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1.0f);
             yield return new WaitForSeconds(blinkInterval);
             elapsedTime += blinkInterval * 2;
-
         }
+                
         spriteRenderer.color = originalColor;
         isInvincible = false;
+        Debug.Log($"[무적 종료] 시간: {Time.time}, 색상 복구됨");
+    }
+
+    public bool IsInvincible()
+    {
+        return isInvincible;
     }
 
     IEnumerator KnockbackCoroutine()
     {
         isKnockback = true;
-        yield return new WaitForSeconds(knockbackDuration);
+        yield return new WaitForSeconds(knockbackDuration);        
+
         isKnockback = false;
     }
 }

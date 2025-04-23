@@ -6,6 +6,9 @@ public class PlayerEvent : MonoBehaviour
     public GameObject SpaceKeyObj;
     public GameObject Mouse1KeyObj;
 
+    [Header("GameScene1")]
+    public string nextSceneName;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.name == "TutorialEvent1")
@@ -20,6 +23,11 @@ public class PlayerEvent : MonoBehaviour
         else if (collision.name == "TutorialEvent3")
         {
             Mouse1KeyObj.SetActive(true);
+        }
+        else if (collision.CompareTag("Finish"))
+        {
+            Debug.Log("튜토리얼 종료 다음씬으로 이동: " + nextSceneName);
+            SceneController.Instance.StartSceneTransition(nextSceneName);
         }
     }
 

@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAnimation : MonoBehaviour
 {
@@ -71,4 +72,11 @@ public class PlayerAnimation : MonoBehaviour
     {
         SoundManager.Instance.PlaySFX(SFXType.JumpSound);
     }
+
+    public void OnDeathAnimationEnd()
+    {
+        Debug.Log("Á×¾úÀ¸´Ï ¾À ´Ù½Ã ·Îµù");
+        PlayerState.Instance.StartCoroutine(PlayerState.Instance.HandleDeath());
+    }
+
 }

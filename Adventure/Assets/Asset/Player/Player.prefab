@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 733003281110271023}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4018251117828800490}
   - component: {fileID: 2848570158612161574}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackLeftObj
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2669200432797006042}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheckObj
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
@@ -151,13 +151,13 @@ GameObject:
   - component: {fileID: 7490405634518131299}
   - component: {fileID: 6112771869223208816}
   - component: {fileID: 3432767252870010509}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bow
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7490405634518131299
 Transform:
   m_ObjectHideFlags: 0
@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3970472342031098974}
   - component: {fileID: 8307887905052305303}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackRightObj
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
@@ -341,14 +341,14 @@ GameObject:
   - component: {fileID: 8847247614453735074}
   - component: {fileID: 5714869102496662317}
   - component: {fileID: 5750375309543879285}
-  - component: {fileID: 2821827447837243647}
   - component: {fileID: 5863682080877404685}
   - component: {fileID: 9001187695323014438}
   - component: {fileID: 7995946902113471886}
   - component: {fileID: 9132347205775959745}
   - component: {fileID: 2961050615186808009}
   - component: {fileID: 4032154168739375706}
-  m_Layer: 0
+  - component: {fileID: 7355008006353977061}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -467,7 +467,6 @@ MonoBehaviour:
   invincibilityDuration: 1
   knockbackForce: 5
   knockbackDuration: 0.2
-  pauseMenuUI: {fileID: 0}
 --- !u!114 &5750375309543879285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,18 +487,6 @@ MonoBehaviour:
   shakeDuration: 0.5
   shakeMagnitude: 0.1
   attackStateName: Attack
---- !u!114 &2821827447837243647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7159547908387102358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c2677451c1f0e24f9c4010857460135, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5863682080877404685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,7 +591,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7159547908387102358}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fc0187f54c50294c89640c0e937b9e3, type: 3}
   m_Name: 
@@ -631,3 +618,20 @@ MonoBehaviour:
   hitParticle: 0
   shootOrigin: {fileID: 733003281110271023}
   playerSpriteRenderer: {fileID: 4640261406140521181}
+--- !u!114 &7355008006353977061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159547908387102358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6059d44c50e1e7458901fd7235651e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 4
+  currentHp: 0
+  damage: 10
+  attackSpeed: 1
+  moveSpeed: 3
