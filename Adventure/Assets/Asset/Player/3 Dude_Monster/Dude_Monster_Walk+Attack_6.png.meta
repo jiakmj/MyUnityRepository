@@ -124,6 +124,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -272,7 +285,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Dude_Monster_Walk+Attack_6_0: -479123336475293590
+      Dude_Monster_Walk+Attack_6_1: 4818349763931446735
+      Dude_Monster_Walk+Attack_6_2: -8659592838175719638
+      Dude_Monster_Walk+Attack_6_3: -5403573428156219237
+      Dude_Monster_Walk+Attack_6_4: 2788685059783709916
+      Dude_Monster_Walk+Attack_6_5: -2996108948546704411
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

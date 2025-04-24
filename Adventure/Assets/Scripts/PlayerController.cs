@@ -19,7 +19,10 @@ public class PlayerController : MonoBehaviour
     
 
     private Color originalColor;
-    private Vector3 StartPlayerPos;   
+    private Vector3 StartPlayerPos;
+
+    [Header("GameScene1")]
+    public string nextSceneName;
 
     private void Awake()
     {
@@ -86,6 +89,11 @@ public class PlayerController : MonoBehaviour
             float shakeDuration = 0.1f;
             float shakeMagnitude = 0.1f;
             StartCoroutine(CameraShakeManager.Instance.Shake(shakeDuration, shakeMagnitude));
+        }
+        else if (collision.CompareTag("Finish"))
+        {
+            Debug.Log("튜토리얼 종료 다음씬으로 이동: " + nextSceneName);
+            SceneController.Instance.StartSceneTransition(nextSceneName);
         }
     }
 

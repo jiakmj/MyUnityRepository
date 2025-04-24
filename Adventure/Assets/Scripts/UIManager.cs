@@ -29,7 +29,8 @@ public class UIManager : MonoBehaviour
     {
         if (Instance == null)
         {
-            Instance = this;           
+            Instance = this;
+            Debug.Log("UIManager 인스턴스 설정됨");
         }
         else
         {
@@ -97,6 +98,17 @@ public class UIManager : MonoBehaviour
 
     public void Return()
     {
+        if (pauseUI == null)
+        {
+            Debug.LogError("pauseUI가 할당되지 않았습니다!");
+            pauseUI = GameObject.Find("Pause");
+            if (pauseUI == null)
+            {
+                Debug.LogError("PauseUI를 찾을 수 없습니다!");
+                return;
+            }
+            
+        }
         pauseUI.SetActive(false);
         Time.timeScale = 1.0f;
         isPaused = false;
@@ -107,6 +119,28 @@ public class UIManager : MonoBehaviour
     {
         SoundManager.Instance.PlaySFX(SFXType.UISound);
         Application.Quit();
+    }
+
+    // 씬에 맞게 UI를 초기화
+    public void InitializeUI(bool showHP, bool showItems)
+    {
+        // HP UI 활성/비활성
+        hpImage.gameObject.SetActive(showHP);
+
+        // 코인 UI 활성/비활성
+        for (int i = 0; i < coinImages.Length; i++)
+        {
+            if (coinImages[i] == null)
+            {
+                Debug.LogWarning($"coinImages[{i}] is null");
+                continue;
+            }
+
+            coinImages[i].gameObject.SetActive(showItems);
+        }
+
+        if (coinCompleteText != null)
+            coinCompleteText.SetActive(false);
     }
 
     // 씬 전환 시 UI 초기화

@@ -15,6 +15,7 @@ public class PlayerState : MonoBehaviour
     public float attackSpeed = 1.0f;
     public float moveSpeed = 3.0f;
     private bool isDead = false;
+    private Vector3 initialPosition;
 
     private PlayerAnimation playerAnimation;
     private Animator animator;
@@ -30,6 +31,7 @@ public class PlayerState : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        initialPosition = transform.position;
         currentHp = maxHp;
     }
 
@@ -38,7 +40,12 @@ public class PlayerState : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         animator = GetComponent<Animator>();
         GameManager.Instance.LoadPlayerState(this);
-        currentHp = maxHp;
+        
+    }
+
+    void OnEnable()
+    {
+        isDead = false;
     }
 
     public void TakeDamage(int amount)
@@ -83,9 +90,16 @@ public class PlayerState : MonoBehaviour
         // 애니메이션의 길이를 정확히 알면 해당 시간으로 수정하면 좋음
         yield return new WaitForSeconds(2f); // 예: 2초 동안 대기 (애니메이션 시간에 맞춰 조정)
 
-        // 사망 후 씬 리로드
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneController.Instance.StartSceneTransition(currentSceneName);
+        // isDead 상태를 해제하고 초기 상태로 복구
+        isDead = false;
+        currentHp = maxHp;
+        transform.position = initialPosition;
+        playerAnimation.Reset(); // <- 필요 시 직접 구현
+        animator.Rebind();
+        animator.Update(0f);
+
+        SceneController.Instance.StartSceneTransition(SceneManager.GetActiveScene().name);
+        UIManager.Instance.UpdateHP(currentHp);
     }
 
     public void Die()

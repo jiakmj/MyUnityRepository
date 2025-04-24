@@ -5,13 +5,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private int coinCount = 0;   
+    private int coinCount = 0;
 
     private const string COIN_KEY = "CoinCount";
     private const string DAMAGE_KEY = "PlayerDamage";
     private const string ATTACK_SPEED_KEY = "PlayerAttackSpeed";
     private const string MOVE_SPEED_KEY = "PlayerMoveSpeed";
     private const string HP_KEY = "PlayerHP";
+
+    [SerializeField] private GameObject[] blocksToRemove;
+    private bool blockRemoved = false;
 
     private void Awake()
     {
@@ -24,7 +27,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-       
+
 
     public void AddCoin(int amount)
     {
@@ -36,6 +39,12 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.PlaySFX(SFXType.ItemGet);
         // PlayerPrefs.SetInt("Coin", coinCount);
         UIManager.Instance.UpdateCoinUI(coinCount);
+
+        if (coinCount == 3 && !blockRemoved)
+        {
+            blockRemoved = true;
+            RemoveBlockingObjects();
+        }
     }
 
     public void ResetCoin()
@@ -88,7 +97,7 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey(DAMAGE_KEY))
         {
             states.damage = PlayerPrefs.GetInt(DAMAGE_KEY);
-        } 
+        }
         if (PlayerPrefs.HasKey(ATTACK_SPEED_KEY))
         {
             states.attackSpeed = PlayerPrefs.GetFloat(ATTACK_SPEED_KEY);
@@ -97,9 +106,23 @@ public class GameManager : MonoBehaviour
         {
             states.maxHp = PlayerPrefs.GetInt(HP_KEY);
         }
-        if(PlayerPrefs.HasKey(MOVE_SPEED_KEY))
+        if (PlayerPrefs.HasKey(MOVE_SPEED_KEY))
         {
             states.moveSpeed = PlayerPrefs.GetFloat(MOVE_SPEED_KEY);
         }
-    }    
+    }
+
+    private void RemoveBlockingObjects()
+    {
+        GameObject[] blocks = GameObject.FindGameObjectsWithTag("Block");
+
+        foreach (var obj in blocks)
+        {
+            // Shake
+            CameraShakeManager.Instance.Shake(0.3f, 0.2f);
+
+            // Delay ÈÄ ÆÄ±«
+            Destroy(obj, 0.3f);
+        }
+    }
 }

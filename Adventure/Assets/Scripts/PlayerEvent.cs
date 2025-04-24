@@ -5,9 +5,12 @@ public class PlayerEvent : MonoBehaviour
     public GameObject ArrowKeyObj;
     public GameObject SpaceKeyObj;
     public GameObject Mouse1KeyObj;
+    public GameObject Mouse2HoldObj;
+    public GameObject BowKeyObj;
+    public GameObject FoodObj;
 
-    [Header("GameScene1")]
-    public string nextSceneName;
+    //[Header("GameScene1")]
+    //public string nextSceneName;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -24,11 +27,23 @@ public class PlayerEvent : MonoBehaviour
         {
             Mouse1KeyObj.SetActive(true);
         }
-        else if (collision.CompareTag("Finish"))
+        else if (collision.name == "TutorialEvent4")
         {
-            Debug.Log("튜토리얼 종료 다음씬으로 이동: " + nextSceneName);
-            SceneController.Instance.StartSceneTransition(nextSceneName);
+            Mouse2HoldObj.SetActive(true);
         }
+        else if (collision.name == "TutorialEvent5")
+        {
+            BowKeyObj.SetActive(true);
+        }
+        else if (collision.name == "TutorialEvent6")
+        {
+            FoodObj.SetActive(true);
+        }
+        //else if (collision.CompareTag("Finish"))
+        //{
+        //    Debug.Log("튜토리얼 종료 다음씬으로 이동: " + nextSceneName);
+        //    SceneController.Instance.StartSceneTransition("GameScene1");
+        //}
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -44,6 +59,18 @@ public class PlayerEvent : MonoBehaviour
         else if (collision.name == "TutorialEvent3")
         {
             Mouse1KeyObj.SetActive(false);
+        }
+        else if (collision.name == "TutorialEvent4")
+        {
+            Mouse2HoldObj.SetActive(false);
+        }
+        else if (collision.name == "TutorialEvent5")
+        {
+            BowKeyObj.SetActive(false);
+        }
+        else if (collision.name == "TutorialEvent6")
+        {
+            FoodObj.SetActive(false);
         }
     }
 }

@@ -209,6 +209,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &382509265 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8305614896119402948, guid: 4fc683f4a6e8ca740a4ff76af94b5e52, type: 3}
+  m_PrefabInstance: {fileID: 943360793}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53bc942f4333c41489f9017b4ae6ee20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &420821405
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,18 +636,114 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 437776125407317884, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885686071035814128, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 937703841074899515, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_Text
+      value: END
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912425848194151493, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624292013808178217, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925142055267894203, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658688015872923905, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3894142523306207191, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4083686050891418777, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1403862106}
+    - target: {fileID: 4164116161434241828, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 382509265}
+    - target: {fileID: 4164116161434241828, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623066818925154143, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 382509265}
+    - target: {fileID: 4623066818925154143, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Return
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180550102807327138, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5770188491498767851, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6240745759288244743, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_Text
+      value: START
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432578785086820501, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432578785086820501, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432578785086820501, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432578785086820501, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432578785086820501, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 137.5425
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432578785086820501, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 137.0425
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432578785086820501, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 11.335876
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432578785086820501, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -9.574493
       objectReference: {fileID: 0}
     - target: {fileID: 7926466876983564949, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1403862106}
+    - target: {fileID: 8166144460948943403, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8461176253763250821, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8980164862988727241, guid: 5702e6753be505b4aa8031469dc85564, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -789,7 +896,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 5703233759470114848}
+  - {fileID: 943360793}
   - {fileID: 420821408}
   - {fileID: 71305781}
-  - {fileID: 943360793}
   - {fileID: 1092605639197233119}

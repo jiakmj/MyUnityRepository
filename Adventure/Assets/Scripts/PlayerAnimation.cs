@@ -79,4 +79,18 @@ public class PlayerAnimation : MonoBehaviour
         PlayerState.Instance.StartCoroutine(PlayerState.Instance.HandleDeath());
     }
 
+    public void Reset()
+    {
+        // 모든 트리거 초기화
+        animator.ResetTrigger("Hit");
+        animator.ResetTrigger("Dead");
+
+        // 애니메이터 상태 초기화
+        animator.Rebind();       // 바인딩 초기화
+        animator.Update(0f);     // 즉시 갱신
+
+        // 원하는 초기 상태 설정 (선택적)
+        animator.Play("Idle", 0, 0f); // Idle 상태로 되돌리기
+    }
+
 }

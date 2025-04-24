@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class SceneController : MonoBehaviour
 {
@@ -46,11 +47,21 @@ public class SceneController : MonoBehaviour
         asyncOperation.allowSceneActivation = true;
 
         yield return asyncOperation;
-               
-        yield return new WaitUntil(() => UIManager.Instance != null);  
 
-        // 씬에 맞는 UI 초기화
-        UIManager.Instance.InitializeUI(4, 4); // 예시 값, 필요에 따라 수정
+        // 새 씬 로드 완료 후 panel 다시 찾기
+        yield return new WaitUntil(() => panel != null); // <- 새 씬 로드 후 다시 대기
+        panel.gameObject.SetActive(true); // 다시 활성화
+
+        yield return new WaitUntil(() => UIManager.Instance != null);
+
+        if (sceneName == "Tutorial" || sceneName == "GameScene1")
+        {
+            UIManager.Instance.InitializeUI(true, true);
+        }
+        else if (sceneName == "Menu")
+        {
+            UIManager.Instance.InitializeUI(false, false);
+        }
 
         yield return StartCoroutine(FadeImage(1, 0, fadeDuration));
         panel.gameObject.SetActive(false);
@@ -109,6 +120,23 @@ public class SceneController : MonoBehaviour
         if (UIManager.Instance == null)
         {
             UIManager.Instance = FindObjectOfType<UIManager>();
+            Debug.Log("UIManager 찾음: " + (UIManager.Instance != null));
         }
+
+        Debug.Log("[PlayerState] 씬 로드됨. HP 초기화!");
+
+        // 카메라 재연결
+        var virtualCam = FindObjectOfType<CinemachineCamera>();
+        if (virtualCam != null)
+        {
+            virtualCam.Follow = PlayerState.Instance.transform;
+            virtualCam.LookAt = PlayerState.Instance.transform;
+            Debug.Log("[Cinemachine] Follow, LookAt 재연결 완료");
+        }
+        else
+        {
+            Debug.LogWarning("[Cinemachine] VirtualCamera를 찾을 수 없습니다.");
+        }
+
     }
 }
