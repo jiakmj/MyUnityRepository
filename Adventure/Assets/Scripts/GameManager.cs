@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey(DAMAGE_KEY))
         {
             states.damage = PlayerPrefs.GetInt(DAMAGE_KEY);
-        }
+        } 
         if (PlayerPrefs.HasKey(ATTACK_SPEED_KEY))
         {
             states.attackSpeed = PlayerPrefs.GetFloat(ATTACK_SPEED_KEY);

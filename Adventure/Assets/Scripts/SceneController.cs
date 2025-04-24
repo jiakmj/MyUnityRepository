@@ -46,9 +46,8 @@ public class SceneController : MonoBehaviour
         asyncOperation.allowSceneActivation = true;
 
         yield return asyncOperation;
-
-        // 씬 전환 완료 후 다시 panel 연결 (중요!!!)
-        yield return new WaitUntil(() => panel != null);  // 씬 전환 직후 새로 연결될 수 있음
+               
+        yield return new WaitUntil(() => UIManager.Instance != null);  
 
         // 씬에 맞는 UI 초기화
         UIManager.Instance.InitializeUI(4, 4); // 예시 값, 필요에 따라 수정
@@ -105,6 +104,11 @@ public class SceneController : MonoBehaviour
             {
                 Debug.LogWarning("FadePanel not found in the scene.");
             }
+        }
+
+        if (UIManager.Instance == null)
+        {
+            UIManager.Instance = FindObjectOfType<UIManager>();
         }
     }
 }
