@@ -5,9 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private int coinCount = 0;
-
-    public Text coinText;
+    private int coinCount = 0;   
 
     private const string COIN_KEY = "CoinCount";
     private const string DAMAGE_KEY = "PlayerDamage";
@@ -26,14 +24,25 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+       
 
     public void AddCoin(int amount)
     {
         coinCount += amount;
-        coinText.text = coinCount.ToString();
+        if (coinCount > 3)
+            coinCount = 3;
+        //coinText.text = coinCount.ToString();
         SaveCoin();
         SoundManager.Instance.PlaySFX(SFXType.ItemGet);
         // PlayerPrefs.SetInt("Coin", coinCount);
+        UIManager.Instance.UpdateCoinUI(coinCount);
+    }
+
+    public void ResetCoin()
+    {
+        coinCount = 0;
+        //coinText.text = coinCount.ToString();
+        UIManager.Instance.UpdateCoinUI(coinCount);
     }
 
     public bool UseCoin(int amount)
@@ -42,6 +51,7 @@ public class GameManager : MonoBehaviour
         {
             coinCount -= amount;
             SaveCoin();
+            //UIManager.Instance.UpdateCoinUI(coinCount);
             return true;
         }
         Debug.Log("코인이 부족합니다.");
@@ -62,6 +72,7 @@ public class GameManager : MonoBehaviour
     private void LoadCoin()
     {
         coinCount = PlayerPrefs.GetInt(COIN_KEY, 0);
+        //UIManager.Instance.UpdateCoinUI(coinCount);
     }
 
     public void SavePlayerState(PlayerState states)
@@ -90,12 +101,5 @@ public class GameManager : MonoBehaviour
         {
             states.moveSpeed = PlayerPrefs.GetFloat(MOVE_SPEED_KEY);
         }
-    }
-    
-    public void ResetCoin()
-    {
-        coinCount = 0;
-        coinText.text = coinCount.ToString();
-        // PlayerPrefs.SetInt("Coin", coinCount);
-    }
+    }    
 }

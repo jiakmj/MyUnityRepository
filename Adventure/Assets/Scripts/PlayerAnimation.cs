@@ -39,13 +39,13 @@ public class PlayerAnimation : MonoBehaviour
     }
 
     public void SetRunning(bool isRunning)
-    {
+    {        
         animator.SetBool("isRunning", isRunning);
     }
 
     public void SetPushing(bool ispushing)
     {
-        animator.SetBool("ispushing", ispushing);
+        animator.SetBool("isPushing", ispushing);
     }
 
     public void TriggerJump()

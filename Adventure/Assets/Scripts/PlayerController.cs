@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -6,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerMovement movement;
     private PlayerAttack attack;
-
+    
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private bool isInvincible = false;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private bool isKnockback = false;
     public float knockbackDuration = 0.2f;
+    
 
     private Color originalColor;
     private Vector3 StartPlayerPos;   
@@ -29,7 +31,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void Start()
-    {
+    {   
         StartPlayerPos = transform.position;
         originalColor = spriteRenderer.color;
     }
@@ -64,14 +66,14 @@ public class PlayerController : MonoBehaviour
                     UIManager.Instance.Pause();
                }
             }
-        }
+        }        
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Coin"))
         {
-            GameManager.Instance.AddCoin(10);
+            GameManager.Instance.AddCoin(1);
             Destroy(collision.gameObject);
         }
         else if (collision.CompareTag("DeadZone"))
@@ -81,10 +83,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.CompareTag("Monster"))
         {
-            PlayerAttack playerAttack = GetComponent<PlayerAttack>();
             float shakeDuration = 0.1f;
-            float shakeMagnitude = 0.3f;
-            //StartCoroutine(playerAttack.Shake(shakeDuration, shakeMagnitude));
+            float shakeMagnitude = 0.1f;
+            StartCoroutine(CameraShakeManager.Instance.Shake(shakeDuration, shakeMagnitude));
         }
     }
 
@@ -97,11 +98,16 @@ public class PlayerController : MonoBehaviour
             PlayerState.Instance.TakeDamage(1);
             SoundManager.Instance.PlaySFX(SFXType.HitSound);
 
+            float shakeDuration = 0.1f;
+            float shakeMagnitude = 0.1f;
+
+            StartCoroutine(CameraShakeManager.Instance.Shake(shakeDuration, shakeMagnitude));
+            CameraShakeManager.Instance.GenerateCameraImpulse();
+
             StartCoroutine(Invincibility());
 
             Vector2 knockbackDirection = spriteRenderer.flipX ? Vector2.right : Vector2.left;
             rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
-            //animator.SetTrigger("Hit");
             StartCoroutine(KnockbackCoroutine());
         }
     }
@@ -138,5 +144,15 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(knockbackDuration);        
 
         isKnockback = false;
+    }
+    
+    public bool IsMoving()
+    {
+        return movement != null && movement.IsMoving();
+    }
+
+    public bool IsJumping()
+    {
+        return Mathf.Abs(rb.linearVelocity.y) > 0.1f; // y축 속도가 0이 아니면 점프 중
     }
 }

@@ -8,6 +8,8 @@ TagManager:
   - DeadZone
   - PlayerAttack
   - Monster
+  - PlayerHold
+  - Pickupable
   layers:
   - Default
   - TransparentFX

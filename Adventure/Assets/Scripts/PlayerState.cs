@@ -11,7 +11,7 @@ public class PlayerState : MonoBehaviour
     [Header("플레이어 능력치")]
     public int maxHp = 4;
     public int currentHp;
-    public int damage = 10;
+    public int damage = 1;
     public float attackSpeed = 1.0f;
     public float moveSpeed = 3.0f;
     private bool isDead = false;

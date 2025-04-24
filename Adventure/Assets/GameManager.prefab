@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1576122719578708877
+--- !u!1 &5462215441469471402
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4800920250299420792}
-  - component: {fileID: 7728122959524975931}
-  - component: {fileID: 2862669061793573511}
+  - component: {fileID: 4625073547149393986}
+  - component: {fileID: 5444474023770570294}
+  - component: {fileID: 8305614896119402948}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4800920250299420792
+--- !u!4 &4625073547149393986
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576122719578708877}
+  m_GameObject: {fileID: 5462215441469471402}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,26 +33,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7728122959524975931
+--- !u!114 &5444474023770570294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576122719578708877}
+  m_GameObject: {fileID: 5462215441469471402}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7159720d11932694aa56a7a22298fa00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinText: {fileID: 0}
---- !u!114 &2862669061793573511
+--- !u!114 &8305614896119402948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576122719578708877}
+  m_GameObject: {fileID: 5462215441469471402}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53bc942f4333c41489f9017b4ae6ee20, type: 3}
@@ -66,3 +65,8 @@ MonoBehaviour:
   - {fileID: 2253921698342915704, guid: 02d46f2db1d242544bac67a4771d0e4f, type: 3}
   - {fileID: 3379028905038690520, guid: 02d46f2db1d242544bac67a4771d0e4f, type: 3}
   - {fileID: -4190252709030764220, guid: 02d46f2db1d242544bac67a4771d0e4f, type: 3}
+  coinImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  coinCompleteText: {fileID: 0}

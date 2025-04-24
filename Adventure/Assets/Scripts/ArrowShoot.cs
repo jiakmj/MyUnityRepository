@@ -3,8 +3,10 @@ using UnityEngine;
 public class ArrowShoot : MonoBehaviour
 {
     public float shootRange = 20f;
+    public float damage = 1f;
+
     public LayerMask hitLayerMask;
-    public ParticleType hitParticle;
+    //public ParticleType hitParticle;
 
     public Transform shootOrigin;
 
@@ -24,9 +26,15 @@ public class ArrowShoot : MonoBehaviour
 
         if (hit.collider != null)
         {
-            ParticleManager.Instance.ParticlePlay(hitParticle, hit.point, Vector3.one * 2f);
-
             Debug.Log("Hit: " + hit.collider.name);
+
+            EnemyManager enemy = hit.collider.GetComponent<EnemyManager>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+
+            //ParticleManager.Instance.ParticlePlay(hitParticle, hit.point, Vector3.one * 2f);
         }
         else
         {

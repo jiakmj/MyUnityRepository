@@ -17,6 +17,14 @@ public class UIManager : MonoBehaviour
     private int currentHp;
     private int maxHp;
 
+    [Header("UI Coin Icons (최대 3개)")]
+    public Image[] coinImages;
+
+    public GameObject coinCompleteText;
+    private Color[] originalColors;
+
+    private Coroutine hideTextCoroutine;
+
     private void Awake()
     {
         if (Instance == null)
@@ -30,11 +38,53 @@ public class UIManager : MonoBehaviour
 
         hpRectTransform = hpImage.GetComponent<RectTransform>();
         originalPos = hpRectTransform.anchoredPosition;
+
+        originalColors = new Color[coinImages.Length];
+        for (int i = 0; i < coinImages.Length; i++)
+        {
+            originalColors[i] = coinImages[i].color;
+            coinImages[i].color = new Color(originalColors[i].r, originalColors[i].g, originalColors[i].b, 0.3f);
+        }
+
+        if(coinCompleteText != null)
+        {
+            coinCompleteText.SetActive(false);
+        }
+        
     }
 
     private void Start()
     {
         pauseUI.SetActive(false);
+
+    }
+
+    public void UpdateCoinUI(int totalCoin)
+    {
+        for (int i = 0; i < coinImages.Length; i++)
+        {
+            if (i < totalCoin)
+                coinImages[i].color = originalColors[i]; // 원래 색상 복원
+            else
+                coinImages[i].color = new Color(originalColors[i].r, originalColors[i].g, originalColors[i].b, 0.3f); // 흐릿하게
+        }
+
+        if (totalCoin >= 3 && coinCompleteText != null)
+        {
+            coinCompleteText.SetActive(true);
+            if (hideTextCoroutine != null)
+                StopCoroutine(hideTextCoroutine);
+
+            hideTextCoroutine = StartCoroutine(HideCoinTextAfterSeconds(2f));
+        }
+    
+
+    }
+    IEnumerator HideCoinTextAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        if (coinCompleteText != null)
+            coinCompleteText.SetActive(false);
     }
 
     public void Pause()

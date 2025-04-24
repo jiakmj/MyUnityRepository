@@ -61,15 +61,16 @@ public class ParticleManager : MonoBehaviour
                     StartCoroutine(AnimationEndCoroutine(type, particleObj, animator));
                 }
             }
-        }
-        IEnumerator AnimationEndCoroutine(ParticleType type, GameObject obj, Animator animator)
-        {
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            yield return new WaitForSeconds(stateInfo.length);
-            obj.SetActive(false);
-            particlePools[type].Enqueue(obj);
+        }        
+    }
 
-        }
+    private IEnumerator AnimationEndCoroutine(ParticleType type, GameObject obj, Animator animator)
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        yield return new WaitForSeconds(stateInfo.length);
+        obj.SetActive(false);
+        particlePools[type].Enqueue(obj);
+
     }
 
 

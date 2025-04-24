@@ -19,7 +19,7 @@ public class EnemyManager : MonoBehaviour
     private Color originalColor;
     private Renderer objectRenderer;
     public float colorChangeDuration = 0.5f; 
-    public float hp = 10.0f;
+    public float hp = 2.0f;
     public float damage = 1.0f;
     public float speed = 2.0f;
     public float maxDistance = 3.0f;
@@ -41,6 +41,9 @@ public class EnemyManager : MonoBehaviour
     public float attackRange = 1.5f;
     public float attackCooldown = 3.0f;
     private float lastAttackTime = 0f;
+
+    public float shakeDuration = 0.5f;
+    public float shakeMagnitude = 0.1f;
 
     private float stateChangeInterval = 3.0f;
     private Coroutine stateChangeRoutine;
@@ -199,7 +202,7 @@ public class EnemyManager : MonoBehaviour
     IEnumerator ChangeColorTemporatily()
     {
         SoundManager.Instance.PlaySFX(SFXType.DamageSound);
-        animator.SetTrigger("Hit");
+        animator.SetTrigger("Damage");
         objectRenderer.material.color = Color.red;
         yield return new WaitForSeconds(colorChangeDuration);
         objectRenderer.material.color = originalColor;
@@ -218,8 +221,8 @@ public class EnemyManager : MonoBehaviour
 
     IEnumerator AttackRoutine()
     {
-        isAttack = true;        
-
+        isAttack = true;
+        yield return new WaitForSeconds(1f);
         if (player != null)
         {
             Vector3 dirToPlayer = player.position - transform.position;
@@ -235,7 +238,7 @@ public class EnemyManager : MonoBehaviour
 
         animator.SetTrigger("Attack");
                
-        yield return new WaitForSeconds(1f); // 후딜
+        yield return new WaitForSeconds(5f); // 후딜
 
         isAttack = false;
         Debug.Log("[공격 상태] 공격 종료, 상태 복귀");
@@ -266,6 +269,36 @@ public class EnemyManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        StartCoroutine(CameraShakeManager.Instance.Shake(shakeDuration, shakeMagnitude));
+        CameraShakeManager.Instance.GenerateCameraImpulse();
+
+        hp -= amount;
+        hp = Mathf.Max(hp, 0);
+        Debug.Log($"[몬스터 피해] {amount} 데미지 입음 | 현재 체력: {hp}");
+
+        ParticleManager.Instance.ParticlePlay(ParticleType.PlayerAttack, transform.position, Vector3.one * 2f);
+
+        if (hp <= 0)
+        {
+            Die();
+        }
+        else
+        {            
+            StartCoroutine(ChangeColorTemporatily());
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("몬스터 사망");
+        animator.ResetTrigger("Damage");
+        animator.SetTrigger("Die");
+
+        Destroy(gameObject, 1f);
     }
     /* 이펙트
      * if (spriteRenderer.flipX)

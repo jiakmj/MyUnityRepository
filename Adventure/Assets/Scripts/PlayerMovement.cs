@@ -16,13 +16,15 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
 
     private PlayerAnimation playerAnimation;
+    private PlayerAttach playerAttach;
 
     public GameObject bowObject;   
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerAnimation = GetComponent<PlayerAnimation>();
+        playerAnimation = GetComponent<PlayerAnimation>();      
+        playerAttach = GetComponent<PlayerAttach>();
     }
 
     public void HandleMovement()
@@ -66,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer); //해당 위치에서 원형을 만듦 그래서 새 오브젝트를 자식으로 만들어서 위치값을 참고함
-        if (Input.GetButtonDown("Jump") && isGrounded) //점프애니메이션
+        if (Input.GetButtonDown("Jump") && isGrounded && !playerAttach.IsHoldingObject()) //점프애니메이션
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             //playerAnimation.SetJumping(true);
@@ -82,5 +84,9 @@ public class PlayerMovement : MonoBehaviour
         //{
         //    playerAnimation?.PlayLanding();
         //}
+    }
+    public bool IsMoving()
+    {
+        return Mathf.Abs(rb.linearVelocity.x) > 0.01f;
     }
 }
